@@ -1,0 +1,17 @@
+<odoo>
+    <record id="view_partner_tree_inherit" model="ir.ui.view">
+        <field name="name">res.partner.list.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='complete_name']" position="before">
+                <header>
+                    <button name="action_sync_to_fieldassist"
+                            type="object"
+                            string="Import Distributer"
+                            class="btn-primary"/>
+                </header>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Inherit Search View -->
+    <!-- <record id="view_res_partner_filter_inherit" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">            
+            <xpath expr="//field[@name='name']" position="after">
+                <field name='comment' string='Internal Notes' filter_domain="[('comment', 'ilike', self)]"/>
+                <field name='facebbok' string='Social Media' filter_domain="['|', '|', '|', '|', ('facebbok', 'ilike', self), ('instagram', 'ilike', self), ('twiter', 'ilike', self), ('linkedin', 'ilike', self), ('youtube', 'ilike', self)]"/>
+            </xpath>
+        </field>
+    </record> -->
+    
+    <!-- Contact form -->
+    <record id="view_partner_form_inherit" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='email']" position="after">
+                <field name='SecondaryEmailId' readonly='0'/>
+            </xpath>
+            <xpath expr="//field[@name='company_type']" position="after">
+                <div><field name="cust_contact_type" widget="radio" options="{'horizontal': true}"/></div>
+            </xpath>
+            <xpath expr="//sheet//group" position="after">
+                <group>
+                    <group>
+                        <field name='TIN'/>
+                        <field name='PlaceOfSupply'/>                        
+                        <field name='StockistType'/>
+                        <!-- <field name='Id'/> -->
+                        <field name='LocalName'/>
+                        <field name='sales_manager_id' readonly='1' options="{'no_open': True}"/>
+                        <!-- <field name='Manager'/> -->
+                        <!-- <field name='Place'/> -->
+                        <!-- <field name='GSTIN'/> -->
+                        <!-- <field name='Pincode'/> -->
+                        <!-- <field name='Region'/> -->
+                        <!-- <field name='RegionERPId'/> -->
+
+                        <!-- <field name='ParentERPId'/> -->
+                        
+                        
+                    </group>
+                    <group>
+                        <field name='Zone'/>
+                        <field name='ZoneErpId'/>
+                        <field name='DistributorCategory'/>
+                        <field name='DistributorGrade'/>
+                        <field name='sales_officer_id' readonly='1' options="{'no_open': True}"/>
+                        <!-- <field name='DistributorERPId'/> -->
+                        <!-- <field name='DistributorChannelErpId'/> -->
+                        <!-- <field name='DistributorChannelIdErpId'/> -->
+                        <!-- <field name='DistributorSegmentationIdErpId'/> -->
+                        
+                        
+                        <!-- <field name='Latitude'/>
+                        <field name='Longitude'/> -->
+                        
+                    </group>
+                </group>
+            </xpath>
+            
+            <xpath expr="//page[@name='contact_addresses']" position="after">
+                <page string='Beat'>
+                    <field name='beat_ids'>
+                        <list editable='bottom'>
+                            <field name='name' required='1'/>
+                        </list>
+                    </field>
+                </page>
+
+                <page string='Outlet'>
+                    <field name='outlet_ids'>
+                        <list editable='bottom'>
+                            <field name='beat_id'/>
+                            <field name='name' required='1'/>
+                        </list>
+                    </field>
+                </page>
+
+                <page string='FSSAI Details'>
+                    <group>
+                        <group>
+                            <field name='FSSAINumber'/>
+                            <field name='UdyamNumber'/>
+                            </group>
+                        <group>
+                            <field name='FSSAIExiryDate'/>
+                        </group>
+                    </group>
+                </page>
+                <page string='Warehouse Info'>
+                    <group>
+                        <group>
+                            <field name='WarehouseName'/>
+                            <field name='WarehouseId'/>
+                            <!-- <field name='WarehouseErpId'/> -->
+                        </group>
+                        <group>
+                            <field name='WarehouseAddress'/>
+                            <field name='WarehouseState'/>
+                            <field name='WarehouseCity'/>
+                        </group>
+                    </group>
+                </page>
+                <page string='Bank Info'>
+                    <group>
+                        <group string='Bank Details'>
+                            <field name='BankName'/>
+                            <field name='BankAccountNumber'/>
+                            <field name='BankIFSCCode'/>
+                        </group>
+                        <group string='Security Details'>
+                            <field name='SecurityDeposit'/>
+                            <field name='DDNumber'/>
+                        </group>
+                    </group>
+                </page>
+                <page string='Credit Details'>
+                    <group>
+                        <group>
+                            <field name='DateOfPayment'/>
+                            <field name='payment_mode'/>
+                            <!-- <field name='IsGSTRegistered'/> -->
+                            <field name='IntransitPeriod'/>
+                        </group>
+                        <group>
+                            <field name='CreditDuration'/>
+                            <field name='CreditValue'/>
+                            <field name='CreditInvoiceCount'/>
+                        </group>
+                    </group>
+                </page>
+                <page string='Adhar Details'>
+                    <group>
+                        <group>
+                            <field name='Aadhar'/>
+                            <field name='DOB'/>
+                        </group>
+                        <group>
+                            <field name='OwnerName'/>
+                            <field name='OwnerNo'/>
+                            <field name='CashDiscountLimit'/>
+                        </group>
+                    </group>
+                </page>                
+            </xpath>
+
+            <!-- <xpath expr="//field[@name='phone']" position="attributes">
+                <attribute name='column_invisible'>True</attribute>
+            </xpath>
+            <xpath expr="//field[@name='email']" position="attributes">
+                <attribute name='column_invisible'>True</attribute>
+            </xpath>
+            <xpath expr="//field[@name='city']" position="replace">
+                <field name="city_id" placeholder="City" class="o_address_city" readonly="type == 'contact' and parent_id" options="{'no_open' : True, 'no_create' : True}"/>
+                <field name='city' invisible='1'/>
+            </xpath>
+            <xpath expr="//field[@name='zip']" position="replace">
+                <field name="zip_id" placeholder="ZIP" class="o_address_zip" readonly="type == 'contact' and parent_id" options="{'no_open' : True, 'no_create' : True}"/>
+                <field name='zip' invisible='1'/>
+            </xpath>
+            <xpath expr="//field[@name='category_id']" position="after">
+                <field name='last_purchase_date' string='Last Purchase Date' readonly='1'/>
+                <field name='facebbok' widget="url"/>
+                <field name='instagram' widget="url"/>
+                <field name='twiter' widget="url"/>
+                <field name='linkedin' widget="url"/>
+                <field name='youtube' widget="url"/>
+            </xpath> -->
+        </field>
+    </record>
+
+</odoo>

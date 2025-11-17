@@ -1,0 +1,178 @@
+<odoo>
+    <record id="view_visit_detailed_tree" model="ir.ui.view">
+        <field name="name">visit.detailed.list</field>
+        <field name="model">visit.detailed</field>
+        <field name="arch" type="xml">
+            <list string="Visit Detailed">
+                <header>
+                    <button name='action_cancel' string='Cancel' type='object'/>
+                    <button name='action_create_sale_order' string='Allocate Sales Order' class='oe_highlight' type='object'/>
+                    <button name='action_create_sale_order_with_all_distributor' string='Generate Sales Order' class='oe_highlight' type='object'/>
+                </header>
+                <field name="name"/>
+                <field name="visitguid"/>
+                <field name="visitid"/>
+                <field name="employeename"/>
+                <field name="beatname"/>
+                <field name="distributor_id"/>
+                <field name="outletname"/>
+                <field name="position"/>
+                <field name="time"/>
+                <field name="sale_count" column_invisible='1'/>
+                <button name='action_open_sales' string='Open SO' class='oe_highlight' type='object' invisible="sale_count == 0"/>
+                <field name="state" string='Status' widget="badge" decoration-success="state == 'fully_converted'" decoration-warning="state == 'partially_converted'" decoration-info="state == 'draft'" decoration-danger="state == 'cancelled'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_visit_detailed_form" model="ir.ui.view">
+        <field name="name">visit.detailed.form</field>
+        <field name="model">visit.detailed</field>
+        <field name="arch" type="xml">
+            <form string="Visit Detailed">
+                <header>
+                    <button name='action_cancel' string='Cancel' type='object' invisible="state != 'draft'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,partially_converted,fully_converted"/>
+                </header>
+                <sheet>
+                    <div name="button_box" class="oe_button_box">
+                        <button name="action_open_sales" type="object" class="oe_stat_button" invisible="sale_count == 0" icon="fa-arrows">
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_value text-denger">
+                                    <field name="sale_count" readonly='1'/>
+                                </span>
+                                <span class=" text-denger">
+                                    Sale Order
+                                </span>
+                            </div>
+                        </button>
+                    </div>
+
+                    <div class="oe_title mb24">
+                        <h1>                            
+                            <field id="name" class="text-break" name="name" readonly='1' />
+                        </h1>                         
+                    </div>
+                    <group>
+                        <group>
+                            <!-- <field name="state" readonly='0'/> -->
+
+                            <field name="visitguid"/>
+                            <field name="visitid"/>
+                            <field name="invoicenumber"/>
+                            <field name="employeename"/>
+                            <field name="employeeguid"/>
+                            <field name="position"/>
+                            <field name="positioncode"/>
+                            <!-- <field name="distributorerpid"/> -->
+                            <field name="superstockistname"/>
+                            <!-- <field name="superstockisterpid"/> -->
+                            <field name="employeedesignation"/>
+                            <field name="employeetype"/>
+                            <field name="outletname"/>
+                            <!-- <field name="outleterpid"/> -->
+                            <field name="isfocused"/>
+
+                            <field name="beatname"/>
+                            <field name="distributor_id"/>
+
+                            <field name="vanname"/>
+                            <field name="vanchasisnumber"/>
+                            <!-- <field name="warehouseerpid"/> -->
+                            <field name="latitude"/>
+                            <field name="longitude"/>
+                            <field name="productive"/>
+                            <field name="valid"/>
+                            <field name="nosalesreason"/>
+                            <field name="remarksmanagement"/>
+                            <field name="remarksdistributor"/>
+                            <field name="remarksother"/>
+                            <field name="time"/>
+                        </group>
+                        <group>
+                            <field name="synctime"/>
+                            <field name="discount"/>
+                            <field name="modeofpayment"/>
+                            <!-- <field name="sales"/> -->
+                            <field name="outofturn"/>
+                            <field name="istelephonic"/>
+                            <field name="outlet"/>
+                            <field name="employeelocalname"/>
+                            <!-- <field name="routeerpid"/> -->
+                            <field name="callstarttime"/>
+                            <field name="callendtime"/>
+                            <field name="orderinunits"/>
+                            <field name="orderinvalue"/>
+                            <field name="totalgst"/>
+                            <field name="totaldiscount"/>
+                            <field name="netvalue"/>
+                            <field name="grossvalue"/>
+                            <field name="isnewoutlet"/>
+                            <field name="internationdiscounts"/>
+                            <field name="secondarysalestype"/>
+                            <field name="isovc"/>
+                            <field name="nosalereasoncategory"/>
+                            <field name="ordersource"/>
+                            <field name="expecteddeliverydate"/>
+                            <field name="isverified"/>
+                        </group>
+
+                        <notebook>
+                            <page string='Sales'>
+                                <field name='sales_visit_ids'>
+                                    <list editable='bottom' decoration-danger="is_cancel">
+                                        <field name="is_cancel" column_invisible='1'/>
+                                        <field name="product_erp_id"/>
+                                        <field name="product_id"/>
+                                        <!-- <field name="product_name"/> -->
+                                        <field name="product_division"/>
+                                        <field name="variant"/>
+                                        <field name="material"/>
+                                        <field name="quantity"/>
+                                        <button name='action_cancel' string='Cancel' type='object' invisible="is_cancel or converted_in_so_quantity > 0"/>
+                                        <field name="converted_in_so_quantity"/>
+                                        <field name="pending_convert_in_so_quantity"/>
+                                        <field name="price"/>
+                                        <field name="order_type_char"/>
+                                        <field name="discount_product"/>
+                                        <field name="scheme_cash_discount"/>
+                                        <field name="scheme_quantity"/>
+                                        <field name="scheme_erp_id"/>
+                                        <field name="suggestive_quantity"/>
+                                        <field name="visit_id"/>
+                                        <field name="alternate_category"/>
+                                        <field name="distributor_erp_id"/>
+                                        <field name="original_ptr"/>
+                                        <field name="distributor_type"/>
+                                        <field name="fa_unify_source"/>
+                                        <field name="product_unit"/>
+                                        <field name="cgst"/>
+                                        <field name="sgst"/>
+                                        <field name="igst"/>
+                                        <field name="vat"/>
+                                        <field name="first_level_discount_amount"/>
+                                        <field name="second_level_discount_amount"/>
+
+                                        <!-- <field name="is_product_must_sell"/>
+                                        <field name="is_focused"/>
+                                        <field name="is_assorted"/> -->
+                                        <!-- <field name="additional_product_attributes"/> -->
+                                    </list>
+                                </field>
+                            </page>
+                        </notebook>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_visit_detailed" model="ir.actions.act_window">
+        <field name="name">Visit Detailed</field>
+        <field name="res_model">visit.detailed</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_visit_detailed_root" name="Visit Detailed"/>
+    <menuitem id="menu_visit_detailed" name="Visit Detailed" parent="menu_visit_detailed_root" action="action_visit_detailed"/>
+</odoo>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_emp_primary_sales_wiz_form" model="ir.ui.view">
+        <field name="name">emp.primary.sales.wiz.form</field>
+        <field name="model">emp.primary.sales.wiz</field>
+        <field name="arch" type="xml">
+            <form string="Generate Excel Report">
+                <group>
+                    <group>
+                        <field name="period_from"/>
+                        <!-- <field name="report_file" readonly="1" filename="report_name"/> -->
+                    </group>
+                    <group>
+                        <field name="period_to"/>
+                    </group>
+                </group>
+                <footer>
+                    <button string="Generate Report" type="object" name="generate_excel_report" class="btn-primary"/>
+                    <button string="Close" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_emp_primary_sales_wiz" model="ir.actions.act_window">
+        <field name="name">Generate Excel Report</field>
+        <field name="res_model">emp.primary.sales.wiz</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_custom_parent"
+          name="Custom Excel Reports"
+          parent="sale.menu_sale_report"
+          sequence="50"/>
+
+    <menuitem id="menu_emp_primary_sales_report"
+          name="Employee Primary Sales Report"
+          parent="menu_custom_parent"
+          action="action_emp_primary_sales_wiz"/>
+
+</odoo>

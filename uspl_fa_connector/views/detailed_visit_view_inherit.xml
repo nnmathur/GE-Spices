@@ -1,0 +1,14 @@
+<odoo>
+    <record id="view_visit_detailed_form_inherit" model="ir.ui.view">
+        <field name="name">visit.detailed.list.inherit</field>
+        <field name="model">visit.detailed</field>
+        <field name="inherit_id" ref="uspl_visit_detailed_module.view_visit_detailed_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <header>
+                    <button name="action_sync_to_fieldassist" type="object" string="Import" class="btn-primary"/>
+                </header>
+            </xpath>
+        </field>
+    </record>
+</odoo>

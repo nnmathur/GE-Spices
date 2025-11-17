@@ -1,0 +1,30 @@
+<odoo>
+
+    <record id="res_config_settings_view_form_inherit" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.fieldassist</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base_setup.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@id='companies']" position="after">
+                <block title="Field Assist Configuration" id="field_assist">
+                    <setting string="Field Assist User Name">
+                        <field name="fa_api_url"/>
+                    </setting>
+                    <setting string="Field Assist Password">
+                        <field name="fa_api_token" readonly="0" password="True"/>
+                    </setting>
+                </block>
+
+                <!-- <div class="app_settings_block" data-string="FieldAssist" string="FieldAssist">
+                    <h2>FieldAssist Configuration</h2>
+                    <group>
+                        <field name="fa_api_url"/>
+                        <field name="fa_api_token" password="True"/>
+                    </group>
+                </div> -->
+
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data noupdate='1'>
+        <record id="scheme_sequence" model="ir.sequence">
+            <field name="name">Scheme Sequence</field>
+            <field name="code">scheme.scheme</field>
+            <field name="prefix">SCH/%(y)s/</field>
+            <field name="implementation">no_gap</field>
+            <field name="padding">4</field>
+            <field name="number_next">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+</odoo>

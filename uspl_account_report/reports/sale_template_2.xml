@@ -1,0 +1,750 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <template id="report_sale_order_inherit">
+            <t t-call="uspl_account_report.sale_external_layout_boxed_custom">
+              <div style="width: 100%; border: 2px solid black;">
+                  <t t-set="doc" t-value="o"/>
+                  <t t-set="company" t-value="doc.company_id"/>
+                    <div class="col-auto col-12 mw-100 ">                          
+                        
+                        <div class="row" style="border-top: 1px solid black;  color: black;">
+                            <div class="col-auto col-6 mw-100" style="width: 100%; border-right: 1px solid black;">
+                              <div class="row pt-1" style="margin-left:4px;"> 
+                                  <div class="col-4">
+                                    Quotation No.
+                                  </div>
+                                  <div class="col-1">
+                                    :
+                                  </div>
+                                  <div class="col-7">
+                                    <t t-esc="doc.name"/>
+                                  </div>
+                              </div>
+
+                              <div class="row pt-1" style="margin-left:4px;"> 
+                                  <div class="col-4">
+                                    Date
+                                  </div>
+                                  <div class="col-1">
+                                    :
+                                  </div>
+                                  <div class="col-7">
+                                    <t t-esc="doc.date_order" t-options="{&quot;widget&quot;: &quot;date&quot;,&quot;format&quot;: &quot;dd-MM-yyyy&quot;}"/>
+                                  </div>
+                              </div>
+                              <div class="row pt-1" style="margin-left:4px;"> 
+                                  <div class="col-4">
+                                    Payment Terms
+                                  </div>
+                                  <div class="col-1">
+                                    :
+                                  </div>
+                                  <div class="col-7">
+                                    <t t-esc="doc.payment_term_id.name"/>
+                                  </div>
+                              </div>
+                              <div class="row pt-1" style="margin-left:4px;"> 
+                                  <div class="col-4">
+                                    Mode of Dispatch
+                                  </div>
+                                  <div class="col-1">
+                                    :
+                                  </div>
+                                  <div class="col-7">
+                                    <t t-esc="doc.trnsportation_mode"/>
+                                  </div>
+                              </div>
+                              <div class="row pt-1" style="margin-left:4px;"> 
+                                  <div class="col-4">
+                                    Type of Shipment
+                                  </div>
+                                  <div class="col-1">
+                                    :
+                                  </div>
+                                  <div class="col-7">
+                                    <t t-esc="doc.ship_type"/>
+                                  </div>
+                              </div>
+                              <div class="row pt-1 pb-1" style="margin-left:4px;"> 
+                                  <div class="col-4">
+                                    Port of Loading
+                                  </div>
+                                  <div class="col-1">
+                                    :
+                                  </div>
+                                  <div class="col-7">
+                                    <t t-esc="doc.port_load"/>
+                                  </div>
+                              </div>
+                            </div>
+
+                            <div class="col-auto col-6 mw-100" style="width: 100%; color: black;">
+                                <div class="row pt-1" style="margin-left:4px;"> 
+                                  <div class="col-4">
+                                    Port of Discharge
+                                  </div>
+                                  <div class="col-1">
+                                    :
+                                  </div>
+                                  <div class="col-7">
+                                    <t t-esc="doc.port_disc"/>
+                                  </div>
+                              </div>
+                              <div class="row pt-1" style="margin-left:4px;"> 
+                                  <div class="col-4">
+                                    Incoterms
+                                  </div>
+                                  <div class="col-1">
+                                    :
+                                  </div>
+                                  <div class="col-7">
+                                    <t t-esc="doc.incoterm.name"/>
+                                  </div>
+                              </div>
+                              <div class="row pt-1" style="margin-left:4px;"> 
+                                  <div class="col-4">
+                                    Valitidy Date 
+                                  </div>
+                                  <div class="col-1">
+                                    :
+                                  </div>
+                                  <div class="col-7">
+                                    <t t-esc="doc.validity_date" t-options="{&quot;widget&quot;: &quot;date&quot;,&quot;format&quot;: &quot;dd-MM-yyyy&quot;}"/>
+                                  </div>
+                              </div>
+                              <div class="row pt-1" style="margin-left:4px;"> 
+                                  <div class="col-4">
+                                    Net Weight 
+                                  </div>
+                                  <div class="col-1">
+                                    :
+                                  </div>
+                                  <div class="col-7">
+                                    <t t-esc="doc.net_wght"/>
+                                  </div>
+                              </div>
+                              <div class="row pt-1" style="margin-left:4px;"> 
+                                  <div class="col-4">
+                                    Gross Weight
+                                  </div>
+                                  <div class="col-1">
+                                    :
+                                  </div>
+                                  <div class="col-7">
+                                    <t t-esc="doc.gross_wght"/>
+                                  </div>
+                              </div>
+                              <div class="row pt-1 pb-1" style="margin-left:4px;"> 
+                                  <div class="col-4">
+                                    Delivery Date
+                                  </div>
+                                  <div class="col-1">
+                                    :
+                                  </div>
+                                  <div class="col-7">
+                                    <t t-esc="doc.commitment_date" t-options="{&quot;widget&quot;: &quot;date&quot;,&quot;format&quot;: &quot;dd-MM-yyyy&quot;}"/>
+                                  </div>
+                              </div>
+                            </div>                     
+                        </div>
+
+                        <div class="row" style="border-top: 1px solid black;  color: black;">
+                            <div class="col-auto col-6 mw-100" style="width: 100%; border-right: 1px solid black;">
+
+                                <strong style="font-size: 18px; margin-left:4px">Quotation to :</strong><br/>
+                                <div class="row pt-1" style="margin-left:4px;"> 
+                                  <div class="col-12">                                      
+                                    <strong><t t-esc="doc.partner_id.name" style="font-size: 22px;"/></strong>
+                                  </div>
+                                </div>
+                              
+                              <div class="pt-1" style="margin-left:4px;"> 
+                                    <span t-out="doc.partner_id.street"/><t t-if="doc.partner_id.street2">, </t>
+                                    <span t-out="doc.partner_id.street2"/><t t-if="doc.partner_id.city">, </t>
+                                    <span t-out="doc.partner_id.city"/><t t-if="doc.partner_id.state_id.name">, </t><br/>
+                                    <span t-out="doc.partner_id.state_id.name"/><t t-if="doc.partner_id.country_id.name">, </t>
+                                    <span t-out="doc.partner_id.country_id.name"/><t t-if="doc.partner_id.zip">, </t>
+                                    <span t-out="doc.partner_id.zip"/>
+                              </div>
+
+                              <div class="row pt-1 pb-1" style="margin-left:4px;"> 
+                                  <div class="col-4">
+                                    PAN
+                                  </div>
+                                  <div class="col-1">
+                                    :
+                                  </div>
+                                  <div class="col-7">
+                                    <t t-esc="doc.partner_id.l10n_in_pan"/>
+                                  </div>
+                              </div>
+                              <div class="row pt-1 pb-1" style="margin-left:4px;"> 
+                                  <div class="col-4">
+                                    E-Mail ID
+                                  </div>
+                                  <div class="col-1">
+                                    :
+                                  </div>
+                                  <div class="col-7">
+                                    <t t-esc="doc.partner_id.email"/>
+                                  </div>
+                              </div>
+                              <div class="row pt-1 pb-1" style="margin-left:4px;"> 
+                                  <div class="col-4">
+                                    Mobile No
+                                  </div>
+                                  <div class="col-1">
+                                    :
+                                  </div>
+                                  <div class="col-7">
+                                    <t t-esc="doc.partner_id.mobile"/>
+                                  </div>
+                              </div>
+                              <div class="row pt-1 pb-1" style="margin-left:4px;"> 
+                                  <div class="col-4">
+                                    State
+                                  </div>
+                                  <div class="col-1">
+                                    :
+                                  </div>
+                                  <div class="col-7">
+                                    <t t-esc="doc.partner_id.state_id.name"/>
+                                  </div>
+                              </div>
+                              <div class="row pt-1 pb-1" style="margin-left:4px;"> 
+                                  <div class="col-4">
+                                    Pincode
+                                  </div>
+                                  <div class="col-1">
+                                    :
+                                  </div>
+                                  <div class="col-7">
+                                    <t t-esc="doc.partner_id.zip"/>
+                                  </div>
+                              </div>
+                              <div class="row pt-1 pb-1" style="margin-left:4px;"> 
+                                  <div class="col-4">
+                                    GSTIN / UIN 
+                                  </div>
+                                  <div class="col-1">
+                                    :
+                                  </div>
+                                  <div class="col-7">
+                                    <t t-esc="doc.partner_id.vat"/>
+                                  </div>
+                              </div>
+                            </div>
+
+                            <div class="col-auto col-6 mw-100" style="width: 100%; color: black;">
+                              <strong class="p-1" style="font-size: 18px;">Shipped to :</strong>
+                              <t t-set="ship_add" t-value="doc.get_ship_addres()"/>
+                              <t t-if="ship_add">
+                                <div class="row pt-1" style="margin-left:4px;"> 
+                                      <div class="col-12">                                      
+                                        <strong><t t-esc="ship_add.name" style="font-size: 22px;"/></strong>
+                                      </div>
+                                  </div>
+                                
+                                <div class="row pt-1" style="margin-left:4px;"> 
+                                    <div class="col-12">
+                                      <span t-out="ship_add.street"/><t t-if="ship_add.street2">, </t>
+                                      <span t-out="ship_add.street2"/><t t-if="ship_add.city">, </t>
+                                      <span t-out="ship_add.city"/><t t-if="ship_add.state_id.name">, </t><br/>
+                                      <span t-out="ship_add.state_id.name"/><t t-if="ship_add.country_id.name">, </t>
+                                      <span t-out="ship_add.country_id.name"/><t t-if="ship_add.zip">, </t>
+                                      <span t-out="ship_add.zip"/>
+                                    </div>
+                                </div>
+
+                                <div class="row pt-1 pb-1" style="margin-left:4px;"> 
+                                      <div class="col-4">
+                                        PAN
+                                      </div>
+                                      <div class="col-1">
+                                        :
+                                      </div>
+                                      <div class="col-7">
+                                        <t t-esc="ship_add.l10n_in_pan"/>
+                                      </div>
+                                  </div>
+                                  <div class="row pt-1 pb-1" style="margin-left:4px;"> 
+                                      <div class="col-4">
+                                        E-Mail ID
+                                      </div>
+                                      <div class="col-1">
+                                        :
+                                      </div>
+                                      <div class="col-7">
+                                        <t t-esc="ship_add.email"/>
+                                      </div>
+                                  </div>
+                                  <div class="row pt-1 pb-1" style="margin-left:4px;"> 
+                                      <div class="col-4">
+                                        Mobile No
+                                      </div>
+                                      <div class="col-1">
+                                        :
+                                      </div>
+                                      <div class="col-7">
+                                        <t t-esc="ship_add.mobile"/>
+                                      </div>
+                                  </div>
+                                  <div class="row pt-1 pb-1" style="margin-left:4px;"> 
+                                      <div class="col-4">
+                                        State
+                                      </div>
+                                      <div class="col-1">
+                                        :
+                                      </div>
+                                      <div class="col-7">
+                                        <t t-esc="ship_add.state_id.name"/>
+                                      </div>
+                                  </div>
+                                  <div class="row pt-1 pb-1" style="margin-left:4px;"> 
+                                      <div class="col-4">
+                                        Pincode
+                                      </div>
+                                      <div class="col-1">
+                                        :
+                                      </div>
+                                      <div class="col-7">
+                                        <t t-esc="ship_add.zip"/>
+                                      </div>
+                                  </div>
+                                  <div class="row pt-1 pb-1" style="margin-left:4px;"> 
+                                      <div class="col-4">
+                                        GSTIN / UIN 
+                                      </div>
+                                      <div class="col-1">
+                                        :
+                                      </div>
+                                      <div class="col-7">
+                                        <t t-esc="ship_add.vat"/>
+                                      </div>
+                                  </div>
+                              </t>
+
+                              <t t-else="">
+                                <div class="row pt-1" style="margin-left:4px;"> 
+                                  <div class="col-12">                                      
+                                    <strong><t t-esc="doc.partner_id.name" style="font-size: 22px;"/></strong>
+                                  </div>
+                              </div>
+                              <div class="row pt-1" style="margin-left:4px;"> 
+                                  <div class="col-12">
+                                    <span t-out="doc.partner_id.street"/><t t-if="doc.partner_id.street2">, </t>
+                                    <span t-out="doc.partner_id.street2"/><t t-if="doc.partner_id.city">, </t>
+                                    <span t-out="doc.partner_id.city"/><t t-if="doc.partner_id.state_id.name">, </t><br/>
+                                    <span t-out="doc.partner_id.state_id.name"/><t t-if="doc.partner_id.country_id.name">, </t>
+                                    <span t-out="doc.partner_id.country_id.name"/><t t-if="doc.partner_id.zip">, </t>
+                                    <span t-out="doc.partner_id.zip"/>
+                                  </div>
+                              </div>
+
+                              <div class="row pt-1 pb-1" style="margin-left:4px;"> 
+                                  <div class="col-4">
+                                    PAN
+                                  </div>
+                                  <div class="col-1">
+                                    :
+                                  </div>
+                                  <div class="col-7">
+                                    <t t-esc="doc.partner_id.l10n_in_pan"/>
+                                  </div>
+                              </div>
+                              <div class="row pt-1 pb-1" style="margin-left:4px;"> 
+                                  <div class="col-4">
+                                    E-Mail ID
+                                  </div>
+                                  <div class="col-1">
+                                    :
+                                  </div>
+                                  <div class="col-7">
+                                    <t t-esc="doc.partner_id.email"/>
+                                  </div>
+                              </div>
+                              <div class="row pt-1 pb-1" style="margin-left:4px;"> 
+                                  <div class="col-4">
+                                    Mobile No
+                                  </div>
+                                  <div class="col-1">
+                                    :
+                                  </div>
+                                  <div class="col-7">
+                                    <t t-esc="doc.partner_id.mobile"/>
+                                  </div>
+                              </div>
+                              <div class="row pt-1 pb-1" style="margin-left:4px;"> 
+                                  <div class="col-4">
+                                    State
+                                  </div>
+                                  <div class="col-1">
+                                    :
+                                  </div>
+                                  <div class="col-7">
+                                    <t t-esc="doc.partner_id.state_id.name"/>
+                                  </div>
+                              </div>
+                              <div class="row pt-1 pb-1" style="margin-left:4px;"> 
+                                  <div class="col-4">
+                                    Pincode
+                                  </div>
+                                  <div class="col-1">
+                                    :
+                                  </div>
+                                  <div class="col-7">
+                                    <t t-esc="doc.partner_id.zip"/>
+                                  </div>
+                              </div>
+                              <div class="row pt-1 pb-1" style="margin-left:4px;"> 
+                                  <div class="col-4">
+                                    GSTIN / UIN 
+                                  </div>
+                                  <div class="col-1">
+                                    :
+                                  </div>
+                                  <div class="col-7">
+                                    <t t-esc="doc.partner_id.vat"/>
+                                  </div>
+                              </div>
+
+
+                              </t>
+                            </div>                                                 
+                        </div>
+
+                          
+                          
+                            <table class="table table-sm o_main_table mt-0 mb-0" style="width:100%">
+                              <!-- <thead class="text-center" style="display: table-row-group"> -->
+                                  <tr style="background-color: #DDD9C4; color:black; font-size: 13px;">
+                                      <th name="th_sr" style="width:12%;">Sr No.</th>
+                                      <th name="th_product" style="width:12%;">Description of Goods/Service</th>
+                                      <th name="th_hsn" style="width:8%;">HSN/SAC</th>
+                                      <th name="th_qty" style="width:8%;">Qty.</th>
+                                      <th name="th_uom" style="width:8%;">UOM</th>
+                                      <th name="th_priceunit" style="width:8%;">Unit Price</th>
+                                      <th name="th_net" style="width:8%;">Net Taxable Amt.</th>
+                                      <!-- <th name="th_cg_rate" style="width:8%;">CGST/IGST Rate</th>
+                                      <th name="th_cg_amt" style="width:8%;">CGST/IGST Amt.</th>
+                                      <th name="th_sg_rate" style="width:8%;">SGST Rate</th>
+                                      <th name="th_sg_amt" style="width:8%;">SGST Amt.</th>
+                                      <th name="th_total" style="width:8%;">Total Tax Amt.</th> -->
+                                      <th name="th_total" style="width:8%;">Total Amt.</th>
+                                  </tr>
+                              <!-- </thead> -->
+    
+                              <!-- <style>
+                                td {text-align: center;}
+                              </style>   -->                               
+                              
+                              <!-- <tbody class="sale_tbody"> -->
+                                  <t t-set="sr_no" t-value="0"/>
+                                  <t t-foreach="doc.order_line" t-as="line">
+                                      <t t-set="sr_no" t-value="sr_no+1"/>
+                                      <tr style="font-size: 12px; color:black;">
+                                          <t> 
+                                              <td style="text-align: center;" name="th_sr">
+                                                  <span t-esc="sr_no"/>
+                                              </td>
+    
+                                              <td style="text-align: center;" name="th_product">
+                                                  <span t-field="line.name"/>
+                                              </td>
+                                              <td style="text-align: center;" name="th_hsn">
+                                                  <span t-field="line.product_id.l10n_in_hsn_code"/>
+                                              </td>
+                                              <td style="text-align: right;" name="th_qty">
+                                                  <span t-field="line.cus_product_uom_qty"/>
+                                              </td>
+                                              <td style="text-align: center;" name="th_uom">
+                                                  <span t-field="line.product_uom"/>
+                                              </td>
+                                              <td style="text-align: right;" name="th_priceunit">
+                                                  <span t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}" t-field="line.price_unit"/>
+                                              </td>                                              
+                                              <td style="text-align: right;" name="th_net">
+                                                  <span t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}" t-field="line.price_subtotal"/>
+                                              </td>
+                                              
+                                              <!-- <t t-if="line.tax_id">
+                                                <t t-set="amt_word" t-value="doc.get_tax_amount()"/>
+                                                <t t-foreach="amt_word" t-as="line_amt">
+                                                  <t t-if="line_amt['line_id'] == line.id and line_amt['type'] == 'group'">
+                                                    <td style="text-align: right;" name="th_cg_rate">
+                                                         <span t-esc="line_amt['sgst_rate']"/> 
+                                                    </td>
+                                                    <td style="text-align: right;" name="th_cg_amt">
+                                                        <span t-esc="line_amt['sgst_amt']" t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}"/> 
+                                                    </td>
+                                                    <td style="text-align: right;" name="th_sg_rate">
+                                                         <span t-esc="line_amt['sgst_rate']"/> 
+                                                    </td>
+                                                    <td style="text-align: right;" name="th_sg_amt">
+                                                        <span t-esc="line_amt['sgst_amt']" t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}"/> 
+                                                    </td>
+                                                    <td style="text-align: right;" name="th_tax_amt">
+                                                        <span t-esc="line_amt['total_tax']" t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}"/>
+                                                    </td>
+                                                  </t>
+                                                  <t t-if="line_amt['line_id'] == line.id and line_amt['type'] == 'percent'">
+                                                    <td style="text-align: right;" name="th_sg_rate">
+                                                      <span t-esc="line_amt['igst_rate']"/> 
+                                                    </td>
+                                                    <td style="text-align: right;" name="th_sg_amt">
+                                                      <span t-esc="line_amt['igst_amt']" t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}"/> 
+                                                    </td>
+                                                    <td style="text-align: center;" name="th_sg_rate">
+                                                         NA
+                                                    </td>
+                                                    <td style="text-align: center;" name="th_sg_amt">
+                                                        NA
+                                                    </td>
+                                                    <td style="text-align: right;" name="th_tax_amt">
+                                                        <span t-esc="line_amt['total_tax']" t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}"/>
+                                                    </td>
+                                                  </t>
+    
+                                                  <t t-if="line_amt['line_id'] == line.id and line_amt['type'] not in ['percent','group']">
+                                                    <td style="text-align: center;" name="th_sg_rate">
+                                                      NA 
+                                                    </td>
+                                                    <td style="text-align: center;" name="th_sg_amt">
+                                                      NA 
+                                                    </td>
+                                                    <td style="text-align: center;" name="th_sg_rate">
+                                                         NA
+                                                    </td>
+                                                    <td style="text-align: center;" name="th_sg_amt">
+                                                        NA
+                                                    </td>
+                                                    <td style="text-align: center;" name="th_tax_amt">
+                                                        NA
+                                                    </td>
+                                                  </t>
+    
+                                                </t>
+                                              </t>
+    
+                                              <t t-else="">
+                                                <td style="text-align: center;" name="th_sg_rate">
+                                                  NA 
+                                                </td>
+                                                <td style="text-align: center;" name="th_sg_amt">
+                                                  NA 
+                                                </td>
+                                                <td style="text-align: center;" name="th_sg_rate">
+                                                     NA
+                                                </td>
+                                                <td style="text-align: center;" name="th_sg_amt">
+                                                    NA
+                                                </td>
+                                                <td style="text-align: center;" name="th_tax_amt">
+                                                    NA
+                                                </td>
+                                              </t> -->
+                                              
+                                              <td style="text-align: right;" name="th_total">
+                                                  <span t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}" t-field="line.price_total"/>
+                                              </td>
+    
+                                          </t>
+                                      </tr>
+                                  </t>
+                              <!-- </tbody> -->
+                          </table>
+    
+                        <div class="row" style="border: 1px solid black;  color: black; font-size: 13px">
+                            <div class="col-auto col-6 mw-100" style="width: 100%; color: black;">
+                              <div style="background-color: black; color: white; margin-bottom:4px;"/>
+                                <div class="row pt-2 text-center"> 
+                                    <div class="col-12" style="text-decoration: underline; font-size: 15px; color: black;">
+                                        Declaration
+                                    </div>
+                                </div>
+                                <div class="row pt-2 pb-2 text-center"> 
+                                    <div class="col-12" style="font-size: 13px; color: black;">
+                                        PAYMENT 100% ADVANCE
+                                    </div>
+                                </div>
+                                
+                                <div class="row pt-2 pb-1" style="margin-left:4px; border-top : 1px solid black;">
+                                    <t t-if="doc.amount_total">
+                                        <t t-set="amt_word" t-value="doc.compute_amount_in_words(doc.amount_total)"/>
+                                        <span style="margin-left:4px;">
+                                            <b>Amount in Words: </b>
+                                             <t t-esc="amt_word"/> <br/><br/>
+                                        </span>
+                                    </t>
+                                </div>
+                            </div>
+                            
+                            <div class="col-auto col-6 mw-100" style="border-left:1px solid black; width: 100%; color: black;">
+                              <div class="text-center" style="background-color: black; color: white;">Invoice Summary</div>
+                                <div class="row pt-2" style="margin-left:4px;"> 
+                                    <t t-set="total_amt" t-value="doc.get_tax_total_amount()"/>
+                                    <div class="col-4">
+                                        Total Taxable Amt.
+                                    </div>
+                                    <div style="text-align:right;" class="col-7">
+                                        <t t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}" t-esc="total_amt['total_tax_amt']"/>
+                                    </div>
+                                    <div class="col-1">
+    
+                                    </div>
+                                </div>
+                                <div class="row pt-2" style="margin-left:4px;">
+                                    <div class="col-4">
+                                        Total CGST
+                                    </div>
+                                    <div style="text-align:right;" class="col-7">
+                                        <t t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}" t-esc="total_amt['sgst']"/>
+                                    </div>
+                                    <div class="col-1">
+    
+                                    </div>
+                                </div>
+                                <div class="row pt-2" style="margin-left:4px;">
+                                    <div class="col-4">
+                                       Total SGST
+                                    </div>
+                                    <div style="text-align:right;" class="col-7">
+                                        <t t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}" t-esc="total_amt['sgst']"/>
+                                    </div>
+                                    <div class="col-1">
+    
+                                    </div>
+                                </div>
+    
+                                <div class="row pt-2" style="margin-left:4px;">
+                                    <div class="col-4">
+                                        Total IGST
+                                    </div>
+                                    <div style="text-align:right;" class="col-7">
+                                        <t t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}" t-esc="total_amt['igst']"/>
+                                    </div>
+                                    <div class="col-1">
+    
+                                    </div>
+                                </div>
+                                <div class="row pt-2 pb-1" style="margin-left:4px;margin-bottom:4px;">
+                                    <div class="col-4">
+                                       Total Invoice Amt.
+                                    </div>
+                                    <div style="text-align:right;" class="col-7">
+                                        <t t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}" t-esc="total_amt['total_inv_amt']"/>
+                                    </div>
+                                    <div class="col-1">
+    
+                                    </div>
+                                </div>
+    
+                            </div> 
+                        </div>
+                        
+                        <table class="table-sm o_main_table mt-0 mb-0" style="width:100%">
+                          <tr style="font-size: 13px; color:black;">
+                              <t> 
+                                  <td style="text-align: center; width:15%;" name="th_sr">
+                                      <img t-if="doc.company_id.payment_barcode" t-att-src="image_data_uri(doc.company_id.payment_barcode)" alt="Payment QR Code" style="width: 75px; highr:75px; color: black;"/>
+                                      
+                                  </td>
+                                  
+                                  <td style="text-align: left; width:35%;" name="th_sr">
+                                      CENTRAL BANK OF INDIA,BATALA<br/>
+                                      Account Number:5478635431<br/>
+                                      IFSC: CBIN0280348<br/>
+                                  </td>
+
+                                  <td style="text-align: left; width:50%;" name="th_product">
+                                      HDFC BANK LTD,BATALA<br/>
+                                      Account Number: 50200053151492<br/>
+                                      IFSC: HDFC0002695<br/>
+                                  </td>
+                              </t>
+                          </tr>
+
+                            <!-- <tr style="color:black;">
+                                <td style="text-align: left; width: 15%;" name="th_sr">
+                                    Bank Details: 
+                                </td>
+                                <td style="text-align: center; width: 20%;" name="th_sr">
+                                    <img t-if="doc.company_id.payment_barcode" t-att-src="image_data_uri(doc.company_id.payment_barcode)" alt="Payment QR Code" style="width: 80px; highr:80px; color: black;"/>
+                                </td>
+                                <td style="width: 65%;">
+                                    CENTRAL BANK OF INDIA,BATALA<br/> A/C NO. 5478635431<br/> IFSC : CBIN0280348<br/>
+                                    HDFC BANK LTD,BATALA - A/C NO. 50200053151492 - IFSC : HDFC0002695 
+                                </td>
+                            </tr> -->
+                        </table>
+
+                        <table class="table table-sm o_main_table mt-0 mb-0" style="width:100%">   
+                            <tr style="font-size: 13px; color:black;">
+                                <td style="text-align: left; width: 50%;" name="th_sr">
+                                    <div class="pb-2" style="text-decoration: underline; font-size: 15px; color: black;">
+                                        <t>Terms &amp; Conditions</t>
+                                    </div>
+                                    <div t-esc="doc.note"/>
+                                </td>
+                                <td style="text-align: left; width: 50%;" name="th_product">
+                                    <div class="p-2" style="border-bottom:1px solid black;">
+                                        <span>
+                                            Receiver's Signature :
+                                        </span>
+                                    </div>
+                                    <div class="pt-2" style="border-top:1px solid black; text-align: right;">
+                                      <span>
+                                          <strong>For, <t t-esc="company.name" style="font-size: 22px;"/></strong> <br/><br/><br/>
+                                          <strong class="pt-4">Authorised Signature</strong>
+                                      </span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                </div>
+            </t>
+        </template>
+
+        <template id="sale.report_saleorder_raw">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="uspl_account_report.report_sale_order_inherit" t-lang="o.partner_id.lang"/>
+                </t>
+            </t>
+        </template>
+
+        <!-- <template id="report_saleorder">
+            <t t-call="sale.report_saleorder_raw"/>
+        </template> -->
+
+        <!-- <template id="report_account">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="uspl_account_report.report_sale_order_inherit" t-lang="o.partner_id.lang"/>
+                </t>
+            </t>
+        </template>
+
+        <template id="account.report_invoice">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-set="lang" t-value="o.partner_id.lang"/>
+
+                    <t t-if="o.move_type == 'out_invoice'"
+                       t-call="uspl_account_report.report_sale_order_inherit"
+                       t-lang="lang"/>
+
+                    <t t-elif="o._get_name_invoice_report() == 'account.report_invoice_document'"
+                       t-call="account.report_invoice_document"
+                       t-lang="lang"/>
+                    <t t-else="" />
+                </t>
+            </t>
+        </template> -->
+
+
+    <!-- Material Return Report End-->
+
+</odoo>
