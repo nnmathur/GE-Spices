@@ -155,47 +155,47 @@ class Partner(models.Model):
                     }            
                 distributer_id = self.env['res.partner'].sudo().create(vals)
 
-    def action_sync_to_fieldassist(self):
-        username = self.env['ir.config_parameter'].sudo().get_param('fa.api.url')
-        password = self.env['ir.config_parameter'].sudo().get_param('fa.api.token')
+    # def action_sync_to_fieldassist(self):
+    #     username = self.env['ir.config_parameter'].sudo().get_param('fa.api.url')
+    #     password = self.env['ir.config_parameter'].sudo().get_param('fa.api.token')
 
-        # FieldAssist Product API
-        distributer_url = "https://api.fieldassist.io/api/V3/Distributor/Create"
+    #     # FieldAssist Product API
+    #     distributer_url = "https://api.fieldassist.io/api/V3/Distributor/Create"
 
-        headers = {
-            "Content-Type": "application/json",
-        }
+    #     headers = {
+    #         "Content-Type": "application/json",
+    #     }
 
-        payload = [{
-            "Name": "sample string 2",
-            "ContactNo": "sample string 3",
-            "EmailId": "sample string 4",
-            "SecondaryEmailId": "sample string 5",
-            "Manager": "sample string 6",
-            "DistributorERPId": "sample string 7",
-            "LocalName": "sample string 8",
-            # "Address": "sample string 9",
-            "City": "sample string 10",
-            "Place": "sample string 11",
-            "GSTIN": "qwe123rew4356re",
-            "TIN": "qwer3456ytre4",
-            "Pincode": "kjh789",
-            "Region": "sample string 15",
-            "IsActive": True
-        }]
+    #     payload = [{
+    #         "Name": "sample string 2",
+    #         "ContactNo": "sample string 3",
+    #         "EmailId": "sample string 4",
+    #         "SecondaryEmailId": "sample string 5",
+    #         "Manager": "sample string 6",
+    #         "DistributorERPId": "sample string 7",
+    #         "LocalName": "sample string 8",
+    #         # "Address": "sample string 9",
+    #         "City": "sample string 10",
+    #         "Place": "sample string 11",
+    #         "GSTIN": "qwe123rew4356re",
+    #         "TIN": "qwer3456ytre4",
+    #         "Pincode": "kjh789",
+    #         "Region": "sample string 15",
+    #         "IsActive": True
+    #     }]
 
-        try:
-            response = requests.post(distributer_url, headers=headers, data=json.dumps(payload), auth=(username, password))
-            # response = requests.post(distributer_url, headers=headers, data=json.dumps(payload))
-            response_data = response.json()
+    #     try:
+    #         response = requests.post(distributer_url, headers=headers, data=json.dumps(payload), auth=(username, password))
+    #         # response = requests.post(distributer_url, headers=headers, data=json.dumps(payload))
+    #         response_data = response.json()
 
-            if response.status_code == 200 and response_data.get("IsSuccess"):
-                self.fa_sync_status = "success"
-                self.fa_distributor_id = response_data.get("DistributorId", "")
-            else:
-                self.fa_sync_status = "failed"
-                _logger.error("FA Distributor Sync Failed: %s", response_data)
+    #         if response.status_code == 200 and response_data.get("IsSuccess"):
+    #             self.fa_sync_status = "success"
+    #             self.fa_distributor_id = response_data.get("DistributorId", "")
+    #         else:
+    #             self.fa_sync_status = "failed"
+    #             _logger.error("FA Distributor Sync Failed: %s", response_data)
 
-        except Exception as e:
-            self.fa_sync_status = "failed"
-            _logger.error("FA API Error: %s", e)
+    #     except Exception as e:
+    #         self.fa_sync_status = "failed"
+    #         _logger.error("FA API Error: %s", e)
