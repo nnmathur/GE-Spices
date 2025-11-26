@@ -7,7 +7,7 @@
             <form string="Outlet Sales">
                 <header>
                     <button name="action_confirmed" string="Confirm" type="object" class="oe_highlight" invisible="state != 'draft'"/>
-                    <button name="action_delivered" string="Delivered" type="object" class="oe_highlight" invisible="state not in ['confirmed','partially_delivered']"/>
+                    <!-- <button name="action_delivered" string="Delivered" type="object" class="oe_highlight" invisible="state not in ['confirmed','partially_delivered']"/> -->
                     <button name="action_cancel" string="Cancel" type="object" invisible="state not in ['draft', 'confirmed']"/>
                     <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,delivered"/>
                 </header>
@@ -34,14 +34,17 @@
                                     <field name='product_id' required='1'/>
                                     <field name='outletname'/>
                                     <field name='quantity'/>
-                                    <field name='delivered_quantity' readonly='1' optional='hide'/>
-                                    <field name='pending_quantity' optional='hide'/>
+                                    <!-- <field name='delivered_quantity' readonly='1' optional='hide'/> -->
+                                    <!-- <field name='pending_quantity' optional='hide'/> -->
                                     <field name='uom_id'/>
                                     <field name='unit_price'/>
                                     <field name='tax_id'/>
                                     <field name='untaxed_amt'/>
                                     <field name='total_tax_amt' column_invisible='1'/>
                                     <field name='total_amt'/>
+                                    <field name="state" widget="badge" decoration-success="state == 'delivered'" decoration-danger="state == 'cancel'"/>
+                                    <button name="action_delivered" string="Delivered" type="object" class="oe_highlight" invisible="state or parent.state not in ['confirmed','partially_delivered']"/>
+                                    <button name="action_cancel" string="Cancel" type="object" invisible="state or parent.state not in ['confirmed','partially_delivered']"/>
                                 </list>
                             </field>
 

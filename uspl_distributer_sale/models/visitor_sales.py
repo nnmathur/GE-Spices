@@ -104,6 +104,36 @@ class VisitorSalesLine(models.Model):
     untaxed_amt = fields.Float(string='Untaxed Amount', compute='_compute_total_amt')
     total_tax_amt = fields.Float(string='Total Tax', compute='_compute_total_amt')
     total_amt = fields.Float(string='Total Amount', compute='_compute_total_amt')
+    state = fields.Selection([
+                            ('delivered', 'Delivered'), 
+                            ('cancel', 'Cancelled'), 
+                            ], string='Status', readonly=True, copy=False)
+
+    def action_delivered(self):
+        for rec in self:
+            rec.state = 'delivered'
+            # return rec.action_create_sale_order()
+            total_lines = rec.visit_sales_id.visitor_line_ids
+            total_delivered = rec.visit_sales_id.visitor_line_ids.filtered(lambda l: l.state == 'delivered')
+            total_post = rec.visit_sales_id.visitor_line_ids.filtered(lambda l: l.state)
+            total_pending = rec.visit_sales_id.visitor_line_ids.filtered(lambda l: not l.state)
+            if len(total_lines) == len(total_post) and total_delivered:
+                rec.visit_sales_id.state = 'delivered'
+            elif total_delivered:
+                rec.visit_sales_id.state = 'partially_delivered'
+    
+    def action_cancel(self):
+        for rec in self:
+            rec.state = 'cancel'
+            total_lines = rec.visit_sales_id.visitor_line_ids
+            total_delivered = rec.visit_sales_id.visitor_line_ids.filtered(lambda l: l.state == 'delivered')
+            total_post = rec.visit_sales_id.visitor_line_ids.filtered(lambda l: l.state)
+            total_pending = rec.visit_sales_id.visitor_line_ids.filtered(lambda l: not l.state)
+
+            if len(total_lines) == len(total_post) and total_delivered:
+                rec.visit_sales_id.state = 'delivered'
+            elif total_delivered:
+                rec.visit_sales_id.state = 'partially_delivered'
 
     def _compute_pending_qty(self):
         for rec in self:

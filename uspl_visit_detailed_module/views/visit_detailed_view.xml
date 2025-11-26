@@ -10,13 +10,13 @@
                     <button name='action_create_sale_order_with_all_distributor' string='Generate Sales Order' class='oe_highlight' type='object'/>
                 </header>
                 <field name="name"/>
-                <field name="visitguid"/>
+                <!-- <field name="visitguid"/> -->
                 <field name="visitid"/>
                 <field name="employeename"/>
                 <field name="beatname"/>
                 <field name="distributor_id"/>
                 <field name="outletname"/>
-                <field name="position"/>
+                <field name="grossvalue"/>
                 <field name="time"/>
                 <field name="sale_count" column_invisible='1'/>
                 <button name='action_open_sales' string='Open SO' class='oe_highlight' type='object' invisible="sale_count == 0"/>
@@ -166,6 +166,30 @@
             </form>
         </field>
     </record>
+
+    <!--Gate In Search View Start-->
+        <record model="ir.ui.view" id="visit_detaile_search_view">
+            <field name="name">visit.detailed.search</field>
+            <field name="model">visit.detailed</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name" />
+                    <field name="employeename" />
+                    <field name="distributor_id" />
+                    <field name="sales_visit_ids" string="Product" filter_domain="[('sales_visit_ids.product_id', 'ilike', self)]"/>
+                    <newline />
+                    <separator/>
+                    <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
+                    <filter string="Partially Allocated" name="partially_converted" domain="[('state', '=', 'partially_converted')]"/>
+                    <filter string="Fully Allocated" name="fully_converted" domain="[('state', '=', 'fully_converted')]"/>
+                    <filter string="Cancelled" name="cancelled" domain="[('state', '=', 'cancelled')]"/>
+                    <group expand="0" string="Group by...">
+                        <filter string="Status" name="state" domain='[]' context="{'group_by': 'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+    <!--Gate In Search View End-->
 
     <record id="action_visit_detailed" model="ir.actions.act_window">
         <field name="name">Visit Detailed</field>
