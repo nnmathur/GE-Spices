@@ -90,6 +90,23 @@ class SaleOrder(models.Model):
             order.tax_totals = tax_totals
     '''
 
+    def _create_invoices(self, grouped=False, final=False, date=None):
+        # Call original method
+        invoices = super()._create_invoices(grouped=grouped, final=final, date=date)
+
+        for order in self:
+            # Get the delivery order(s) (stock pickings)
+            pickings = order.picking_ids.filtered(lambda p: p.state in ['done'])
+
+            # Optionally pick the latest or the first
+            picking = pickings[:1]
+
+            # Assign to the invoice
+            for invoice in invoices:
+                invoice.stock_picking_id = picking.id
+
+        return invoices
+
 
 class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
@@ -100,17 +117,18 @@ class SaleOrderLine(models.Model):
     damage_discount = fields.Float(string="Scheme Dist.(%)", default=0.0)
     spl_discount = fields.Float(string="Spl Dist.(%)", default=0.0)
 
-    fixed_discount_amt = fields.Float(string="Fixed Amt.", compute='_compute_discounts')
-    damage_discount_amt = fields.Float(string="Scheme Amt.", compute='_compute_discounts')
-    spl_discount_amt = fields.Float(string="Spl Amt.", compute='_compute_discounts')
+    # fixed_discount_amt = fields.Float(string="Fixed Amt.", compute='_compute_discounts')
+    fixed_discount_amt = fields.Float(string="Fixed Amt.")
+    damage_discount_amt = fields.Float(string="Scheme Amt.")
+    spl_discount_amt = fields.Float(string="Spl Amt.")
 
-    @api.depends('fixed_discount','damage_discount','spl_discount', 'price_unit', 'product_uom_qty')
-    def _compute_discounts(self):
-        for rec in self:
-            rec.fixed_discount_amt = ((rec.product_uom_qty * rec.price_unit) * rec.fixed_discount) / 100
-            rec.damage_discount_amt = ((rec.product_uom_qty * rec.price_unit) * rec.damage_discount) / 100
-            rec.spl_discount_amt = ((rec.product_uom_qty * rec.price_unit) * rec.spl_discount) / 100
-            rec.discount = rec.fixed_discount_amt + rec.damage_discount_amt + rec.spl_discount_amt
+    # @api.depends('fixed_discount','damage_discount','spl_discount', 'price_unit', 'product_uom_qty')
+    # def _compute_discounts(self):
+    #     for rec in self:
+    #         rec.fixed_discount_amt = ((rec.product_uom_qty * rec.price_unit) * rec.fixed_discount) / 100
+    #         rec.damage_discount_amt = ((rec.product_uom_qty * rec.price_unit) * rec.damage_discount) / 100
+    #         rec.spl_discount_amt = ((rec.product_uom_qty * rec.price_unit) * rec.spl_discount) / 100
+    #         rec.discount = rec.fixed_discount_amt + rec.damage_discount_amt + rec.spl_discount_amt
 
     # @api.depends(
     #     'product_uom_qty', 'discount', 'price_unit',

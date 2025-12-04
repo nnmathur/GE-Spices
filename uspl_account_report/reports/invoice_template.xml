@@ -7,326 +7,89 @@
               <div style="width: 100%; border: 2px solid black;">
                   <t t-set="doc" t-value="o"/>
                   <t t-set="company" t-value="doc.company_id"/>
-                    <div class="col-auto col-12 mw-100 ">   
-                        <div class="row">
-                            <div class="col-6" style="color: black;">
-                              <div class="text-left" style="background-color: black; color: white;"><span style="margin-left:8px"><b>Invoice Details</b></span></div>
-                                <div class="row pt-2" style="margin-left:4px;"> 
-                                    <div class="col-4">
-                                        Sale Order No.
-                                    </div>
-                                    <div class="col-1">
-                                        :
-                                    </div>
-                                    <div class="col-8">
-                                        <t t-set="order_name" t-value="doc.get_sale_order()['order']"/>
-                                        <t t-esc="order_name"/>
-                                    </div>
-                                </div>
-                                <div class="row pt-2" style="margin-left:4px;">
-                                    <div class="col-4">
-                                        Sale Order Date
-                                    </div>
-                                    <div class="col-1">
-                                        :
-                                    </div>
-                                    <div class="col-8">
-                                        <t t-set="order_date" t-value="doc.get_sale_order()['date']"/>
-                                        <t t-esc="order_date" t-options="{'widget': 'date','format': 'dd-MM-yyyy'}"/>
-                                    </div>
-                                </div>
-                                <div class="row pt-2" style="margin-left:4px;"> 
-                                    <div class="col-4">
-                                        Payment Terms
-                                    </div>
-                                    <div class="col-1">
-                                        :
-                                    </div>
-                                    <div class="col-8">
-                                        <t t-esc="doc.invoice_payment_term_id.name"/>
-                                    </div>
-                                </div>
-                                <div class="row pt-2" style="margin-left:4px;"> 
-                                    <div class="col-4">
-                                        Delivery Note
-                                    </div>
-                                    <div class="col-1">
-                                        :
-                                    </div>
-                                    <div class="col-8">
-                                        <t t-esc="doc.stock_picking_id.name"/>
-                                        <!-- NA -->
-                                    </div>
-                                </div>
-                                <div class="row pt-2" style="margin-left:4px;"> 
-                                    <div class="col-4">
-                                        Delivery Date
-                                    </div>
-                                    <div class="col-1">
-                                        :
-                                    </div>
-                                    <div class="col-8">
-                                        <t t-esc="doc.stock_picking_id.scheduled_date" t-options="{'widget': 'date','format': 'dd-MM-yyyy'}"/>
-                                        <!-- NA -->
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-6" style="color: black; border-left: 1px solid black;">
-                              <div class="text-center" style="background-color: black; color: black;">Invoice Details</div>
-                                <div class="row pt-2" style="margin-left:4px;"> 
-                                    <div class="col-4">
-                                        Buyer's Order No.
-                                    </div>
-                                    <div class="col-1">
-                                        :
-                                    </div>
-                                    <div class="col-8">
-                                        <t t-esc="doc.ref"/>
-                                        <!-- NA -->
-                                    </div>
-                                </div>
-                                <div class="row pt-2" style="margin-left:4px;">
-                                    <div class="col-4">
-                                        Buyer's Order Date
-                                    </div>
-                                    <div class="col-1">
-                                        :
-                                    </div>
-                                    <div class="col-8">
-                                        <t t-esc="doc.buyers_po_date" t-options="{'widget': 'date','format': 'dd-MM-yyyy'}"/>
-                                    </div>
-                                </div>
-
-                                <div class="row pt-2" style="margin-left:4px;"> 
-                                    <div class="col-4">
-                                        Dispatched Through
-                                    </div>
-                                    <div class="col-1">
-                                        :
-                                    </div>
-                                    <div class="col-8">
-                                        <t t-esc="doc._fields['l10n_in_mode'].convert_to_export(doc.l10n_in_mode, doc)"/>
-                                        <!-- <t t-esc="doc.l10n_in_mode"/> -->
-                                    </div>
-                                </div>
-                                <div class="row pt-2" style="margin-left:4px;">
-                                    <div class="col-4">
-                                        Destination
-                                    </div>
-                                    <div class="col-1">
-                                        :
-                                    </div>
-                                    <div class="col-8">
-                                        <t t-set="order_date" t-value="doc.get_sale_order()['date']"/>
-                                        <t t-esc="doc.l10n_in_state_id.name"/>
-                                    </div>
-                                </div>
-
-                                <div class="row pt-2" style="margin-left:4px;">
-                                    <div class="col-4">
-                                       Transporter
-                                    </div>
-                                    <div class="col-1">
-                                        :
-                                    </div>
-                                    <div class="col-8">
-                                        <t t-esc="doc.l10n_in_transporter_id.name"/>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row" style="border-top: 1px solid black;  color: black; font-size: 15px">
-                            <div class="col-6" style="border-right: 1px solid black;">
-                              <div class="text-center" style="background-color: black; color: white;"><b>Bill To</b></div>
-                              
-                              <div class="row pt-1" style="margin-left:4px;"> 
-                                  <div class="col-12">                                      
-                                    <strong><t t-esc="doc.partner_id.name" style="font-size: 22px;"/></strong>
-                                  </div>
-                              </div>
-                              <div class="row pt-1" style="margin-left:4px;"> 
-                                  <div class="col-12">
-                                    <span t-out="doc.partner_id.street"/><t t-if="doc.partner_id.street2">, </t>
-                                    <span t-out="doc.partner_id.street2"/><t t-if="doc.partner_id.city">, </t>
-                                    <span t-out="doc.partner_id.city"/>,<br/>
-                                    <span t-out="doc.partner_id.country_id.name"/><t t-if="doc.partner_id.zip">, </t>
-                                    <span t-out="doc.partner_id.zip"/>
-                                  </div>
-                              </div>
-                              <div class="row pt-1" style="margin-left:4px;"> 
-                                  <div class="col-4">
-                                    GSTIN/UIN
-                                  </div>
-                                  <div class="col-8">
-                                    <t t-esc="doc.partner_id.vat"/>
-                                  </div>
-                              </div>
-                              <div class="row pt-1" style="margin-left:4px;"> 
-                                  <div class="col-4">
-                                    State Name
-                                  </div>
-                                  <div class="col-8">
-                                    <span t-field="doc.partner_id.state_id.name"/>,
-                                    <span> Code: </span>
-                                    <span t-field="doc.partner_id.state_id.l10n_in_tin"/>
-                                  </div>
-                              </div>
-                            </div>
-                            <div class="col-6" style="">
-                              <div class="text-center" style="background-color: black; color: white;"><b>Ship To</b></div>
-                                <div class="row pt-1" style="margin-left:4px;"> 
-                                  <div class="col-12">                                      
-                                    <strong><t t-esc="doc.partner_shipping_id.name" style="font-size: 22px;"/></strong>
-                                  </div>
-                                </div>
-                                <div class="row pt-1" style="margin-left:4px;"> 
-                                  <div class="col-12">
-                                    <span t-out="doc.partner_shipping_id.street"/><t t-if="doc.partner_shipping_id.street2">, </t>
-                                    <span t-out="doc.partner_shipping_id.street2"/><t t-if="doc.partner_shipping_id.city">, </t>
-                                    <span t-out="doc.partner_shipping_id.city"/>,<br/>
-                                    <span t-out="doc.partner_shipping_id.country_id.name"/><t t-if="doc.partner_shipping_id.zip">, </t>
-                                    <span t-out="doc.partner_shipping_id.zip"/>
-                                  </div>
-                              </div>
-                              <div class="row pt-1" style="margin-left:4px;"> 
-                                  <div class="col-4">
-                                    GSTIN/UIN
-                                  </div>
-                                  <div class="col-8">
-                                    <t t-esc="doc.partner_shipping_id.vat"/>
-                                  </div>
-                              </div>
-                              <div class="row pt-1" style="margin-left:4px;"> 
-                                  <div class="col-4">
-                                    State Name
-                                  </div>
-                                  <div class="col-8">
-                                    <span t-field="doc.partner_shipping_id.state_id.name"/>,
-                                    <span> Code: </span>
-                                    <span t-field="doc.partner_shipping_id.state_id.l10n_in_tin"/>
-                                  </div>
-                              </div>
-                            </div>
-                                                 
-                        </div>
+                    <div class="col-auto col-12 mw-100 ">
+                        <t t-set="uom_name" t-value=" "/>
                         <table class="table table-sm o_main_table mt-0 mb-0" style="width:100%; table-layout: fixed;">
                             <tr style="background-color: #DDD9C4; color:black; font-size: 13px;">
                                 <th style="width:3%; text-align: left;">Sr. No.</th>
-                                <th style="width:9%; text-align: left;">Product / HSN Code</th>
-                                <th style="width:13%; text-align: left;">Item Description</th>
-                                <th style="width:6%; text-align: left;">PKD</th>
-                                <th style="width:6%; text-align: right;">MRP</th>
-                                <th style="width:6%; text-align: right;">Quantity</th>
-                                <th style="width:7%; text-align: right;">Unit Price</th>
-                                <th style="width:7%; text-align: right;">Scheme Dist.(%)</th>
-                                <th style="width:7%; text-align: right;">Spl Dist.(%)</th>
-                                <th style="width:8%; text-align: right;">Taxable Amt.</th>
-                                <th t-if="doc.is_igst" style="width:6%; text-align: right;">IGST %</th>
-                                <th t-if="not doc.is_igst" style="width:6%; text-align: right;">CGST %</th>
-                                <th t-if="not doc.is_igst" style="width:6%; text-align: right;">SGST %</th>
-                                <th style="width:7%; text-align: right;">Total Tax Amt.</th>
-                                <th style="width:7%; text-align: right;">Total Amt.</th>
+                                <th style="width:12%; text-align: left;">No. &amp; Kind of Package</th>
+                                <th style="width:22%; text-align: left;">Description of Goods</th>
+                                <th style="width:10%; text-align: left;">HSN/SAC</th>
+                                <th style="width:12%; text-align: right;">MRP/Marginal</th>
+                                <th style="width:12%; text-align: right;">Quantity</th>
+                                <th style="width:10%; text-align: right;">Rate / Unit</th>
+                                <th style="width:10%; text-align: right;">Dist.(%)</th>
+                                <th style="width:12%; text-align: right;">Amount</th>
                             </tr>
                             <t t-set="sr_no" t-value="0"/>
                             <t t-foreach="doc.invoice_line_ids" t-as="line">
                                 <t t-set="sr_no" t-value="sr_no+1"/>
+                                <t t-set="uom_name" t-value="line.product_uom_id.name"/>
                                 <tr style="font-size: 12px; color:black;">
                                     <t> 
                                         <td style="text-align: right;" name="th_sr">
                                             <span t-esc="sr_no"/>
                                         </td>
-                                        <td>
-                                            <t t-esc="line.product_id.default_code"/><br/>
-                                            <b>HSN Code:</b> <t t-esc="line.product_id.l10n_in_hsn_code"/>
+                                        <td style="text-align: right;" name="th_packing">
+                                            <span t-if="line.sale_line_ids">
+                                                <span t-if="line.sale_line_ids[0].product_packaging_id">
+                                                    <t t-esc="line.sale_line_ids[0].product_packaging_qty"/> <t t-esc="line.sale_line_ids[0].product_packaging_id.name"/>
+                                                </span>
+                                                <span t-else="">
+                                                    N/A
+                                                </span>
+                                            </span>
+                                            <span t-else="">
+                                                N/A
+                                            </span>
                                         </td>
-
                                         <td style="text-align: left;" name="th_product">
                                             <span t-if="line.product_id" t-field="line.product_id.display_name"/>
-                                            <span t-else='' t-field="line.name"/>
+                                            <span t-else="" t-field="line.name"/>
                                         </td>
-                                        <td style="text-align: left;" name="th_hsn">
-                                            <span t-field="line.pkd_date"/>
+                                        
+                                        <td>
+                                            <!--<t t-esc="line.product_id.default_code"/><br/>-->
+                                            <!--<b>HSN Code:</b> -->
+                                            <t t-esc="line.product_id.l10n_in_hsn_code"/>
                                         </td>
-                                        <td class="text-end">
-                                            <t t-esc="line.mrp"/><br/>
-                                            <b>Packing:</b> <t t-esc="line.packing"/>
+                                        
+                                        <td style="text-align: right;" name="th_priceunit">
+                                            <span t-options="{'widget': 'float', 'precision': 2}" t-field="line.mrp"/>
                                         </td>
+                                        
                                         <td style="text-align: right;" name="th_qty">
                                             <span t-field="line.quantity"/> <span t-field="line.product_uom_id"/>
                                         </td>
+                                        
                                         <td style="text-align: right;" name="th_priceunit">
                                             <span t-options="{'widget': 'float', 'precision': 2}" t-field="line.price_unit"/>
                                         </td>
-                                        <td class="text-end">
-                                            <t t-esc="line.damage_discount"/>%<br/>
-                                            <b>Amt:</b> <t t-esc="line.damage_discount_amt"/>
+    
+                                        <td style="text-align: right;" name="th_hsn">
+                                            <span t-field="line.discount"/> %
                                         </td>
-                                        <td class="text-end">
-                                            <t t-esc="line.spl_discount"/>%<br/>
-                                            <b>Amt:</b> <t t-esc="line.spl_discount_amt"/>
-                                        </td>
+                                        
                                         <td name="td_subtotal" class="text-end o_price_total">
                                             <span class="text-nowrap" t-field="line.price_subtotal" t-options="{'widget': 'float', 'precision': 2}">27.00</span>
-                                        </td>
-
-                                        <t t-set="igsst_tax_rate" t-value="0"/>
-                                        <t t-if="line.tax_ids and doc.is_igst" t-set="igsst_tax_rate" t-value="line.tax_ids[0].amount"/>
-                                        <t t-set="igst_tax_amt" t-value="line.price_total - line.price_subtotal"/>
-                                        <td t-if="doc.is_igst" style="text-align: right;" name="th_igst_rate">
-                                          <span t-esc="igsst_tax_rate"/> % IGST<br/>
-                                          <b>Amt:</b> <span t-esc="igst_tax_amt" t-options="{'widget': 'float', 'precision': 2}"/>
-                                        </td>
-
-                                        <t t-set="gst_tax_rate" t-value="0"/>
-                                        <t t-if="line.tax_ids and not doc.is_igst" t-set="gst_tax_rate" t-value="line.tax_ids[0].children_tax_ids[0].amount"/>
-
-                                        <t t-set="gst_tax_amt" t-value="(line.price_total - line.price_subtotal)/2"/>
-                                        <td t-if="not doc.is_igst" style="text-align: right;" name="th_igst_rate">
-                                            <span t-esc="gst_tax_rate"/> % CGST<br/>
-                                            <b>Amt:</b> <span t-esc="gst_tax_amt" t-options="{'widget': 'float', 'precision': 2}"/>
-                                        </td>
-
-                                        <td t-if="not doc.is_igst" style="text-align: right;" name="th_igst_rate">
-                                            <span t-esc="gst_tax_rate"/> % SGST<br/>
-                                            <b>Amt:</b> <span t-esc="gst_tax_amt" t-options="{'widget': 'float', 'precision': 2}"/>
-                                        </td>
-
-                                        <!-- <td class="text-end" t-if="doc.is_igst">
-                                            <t t-esc="line.spl_discount"/>%<br/>
-                                            <b>Amt:</b> <t t-esc="line.spl_discount_amt"/>
-                                        </td>
-                                        <td class="text-end" t-if="not doc.is_igst">
-                                            <t t-esc="line.spl_discount"/>%<br/>
-                                            <b>Amt:</b> <t t-esc="line.spl_discount_amt"/>
-                                        </td>
-                                        <td class="text-end" t-if="not doc.is_igst">
-                                            <t t-esc="line.spl_discount"/>%<br/>
-                                            <b>Amt:</b> <t t-esc="line.spl_discount_amt"/>
-                                        </td> -->
-
-                                        <t t-set="tax_amt" t-value="line.price_total - line.price_subtotal"/>
-                                        <td name="td_tax_amt" class="text-end o_price_total">
-                                            <span class="text-nowrap" t-esc="tax_amt" t-options="{'widget': 'float', 'precision': 2}"/>
-                                        </td> 
-                                        <td style="text-align: right;" name="th_total">
-                                            <span t-options="{'widget': 'float', 'precision': 2}" t-field="line.price_total"/>
                                         </td>
                                     </t>
                                 </tr>
                             </t>
-                          </table>
+                        </table>
 
-                        <table class="table table-sm table-borderless" style="width:100%; table-layout: fixed;">    
+                        <table class="table table-sm table-borderless" style="width:100%; table-layout: fixed; margin-top:-12px;">    
                             <tr>
-                                <th name="th_sr" style="width:50%;text-align: left; margin-left:4px;"></th>
-                                <th name="th_sr" style="width:50%;text-align: left;"> </th>
+                                <th name="th_sr" style="width:40%;text-align: left; margin-left:4px;"/>
+                                <th name="th_sr" style="width:30%;text-align: left;"> </th>
+                                <th name="th_sr" style="width:30%;text-align: left;"> </th>
                             </tr>
-
                             <t t-set="tax_list" t-value="doc.get_tax_summry()"/>                      
                             <t t-foreach="tax_list" t-as="tax">
                                 <tr style="font-size: 12px; color:black;">
                                     <t> 
+                                        <td style="text-align: center;" name="th_sr">
+                                        </td>
                                         <td style="text-align: center;" name="th_sr">
                                         </td>
 
@@ -336,7 +99,7 @@
                                                     <div style="text-align:left;" class="col-6">
                                                         <b><t t-esc="tax['tax_type']"/></b>
                                                     </div>
-                                                    <div style="text-align:left;" class="col-6">
+                                                    <div style="text-align:right;" class="col-6">
                                                         <b><t t-esc="tax['amt']" t-options="{'widget': 'float', 'precision': 2}"/></b>
                                                     </div>
                                                 </div>
@@ -346,7 +109,7 @@
                                                     <div style="text-align:left;" class="col-6">
                                                         <b>CGST Output <t t-esc="tax['tax_type']"/></b>
                                                     </div>
-                                                    <div style="text-align:left;" class="col-6">
+                                                    <div style="text-align:right;" class="col-6">
                                                         <b><t t-esc="tax['amt']" t-options="{'widget': 'float', 'precision': 2}"/></b>
                                                     </div>
                                                 </div>
@@ -355,7 +118,7 @@
                                                     <div style="text-align:left;" class="col-6">
                                                         <b>SGST Output <t t-esc="tax['tax_type']"/></b>
                                                     </div>
-                                                    <div style="text-align:left;" class="col-6">
+                                                    <div style="text-align:right;" class="col-6">
                                                         <b><t t-esc="tax['amt']" t-options="{'widget': 'float', 'precision': 2}"/></b>
                                                     </div>
                                                 </div>
@@ -364,10 +127,50 @@
                                     </t>
                                 </tr>
                             </t>
+                            <tr style="font-size: 14px; color:black; border-top: 1px solid black; margin-top:-12px;">
+                                <t> 
+                                    <td style="text-align: right;" name="th_sr">
+                                        <b>Total</b>
+                                    </td>
+                                    <td style="text-align: right;" name="th_sr">
+                                        <b><t t-esc="doc.total_qty"/><t t-esc="uom_name"/></b>
+                                    </td>
+                                    <td style="text-align: right;" name="th_sr">
+                                        <b><span class="text-nowrap" t-field="doc.amount_total" t-options="{'widget': 'float', 'precision': 2}">27.00</span></b>
+                                    </td>
+                                </t>
+                            </tr>
+                        </table>
+
+                        <table class="table table-sm table-borderless" style="width:100%; table-layout: fixed; border-top: 1px solid black; margin-top:-12px;  margin-bottom:-4px;">    
+                            <tr style="margin-top:-12px;">
+                                <th name="th_sr" style="width:90%;text-align: left; margin-left:4px;"/>
+                                <th name="th_sr" style="width:10%;text-align: left;"> </th>
+                            </tr>
+                            <tr style="font-size: 13px; color:black; margin-top:-12px;">
+                                <t> 
+                                    <td style="text-align: left;" name="th_sr">
+                                        <b>Amount Chargeable (In Words)</b>
+                                    </td>
+                                    <td style="text-align: right;" name="th_sr">
+                                        E. &amp; O.E
+                                    </td>
+                                </t>
+                            </tr>
+                            <tr style="font-size: 15px; color:black; margin-top:-12px;">
+                                <t> 
+                                    <td style="text-align: left;" name="th_sr">
+                                        <b><t t-esc="doc.amount_total_words"/></b>
+                                    </td>
+                                    <td style="text-align: right;" name="th_sr">
+                                        
+                                    </td>
+                                </t>
+                            </tr>
                         </table>
 
 
-                        <!-- <div class="text-center" style="background-color: black; color: white;"><b>HSN Summary </b></div>
+                        <!-- <div class="text-center" style="background-color: black; color: white;"><b>HSN Summary </b></div> -->
                         <table class="table table-sm o_main_table mt-0 mb-0" style="width:100%; table-layout: fixed;">
                             <tr style="background-color: #DDD9C4; color:black; font-size: 13px;">
                                 <th name="th_hsn" style="width:12%;text-align: left;">HSN/SAC</th>
@@ -379,9 +182,14 @@
                                 <th t-if="not doc.is_igst" name="th_sg_rate" style="width:8%;text-align: right;">SGST Rate</th>
                                 <th t-if="not doc.is_igst" name="th_sg_amt" style="width:8%;text-align: right;">SGST Amt.</th>
                                 <th name="th_total" style="width:8%;text-align: right;">Total Tax Amt.</th>
-                                <th name="th_total" style="width:8%;text-align: right;">Total Amt.</th>
+                                <!-- <th name="th_total" style="width:8%;text-align: right;">Total Amt.</th> -->
                             </tr>
+                            <t t-set="price_subtotal" t-value="0"/>
+                            <t t-set="cgst" t-value="0"/>
+                            <t t-set="igst" t-value="0"/>
+                            <t t-set="total_tax" t-value="0"/>
                             <t t-foreach="doc.invoice_line_ids" t-as="line">
+                                <t t-set="price_subtotal" t-value="price_subtotal + line.price_subtotal"/>
                                 <tr style="font-size: 12px; color:black;">
                                     <t>
                                       <td style="text-align: left;" name="th_hsn">
@@ -400,6 +208,7 @@
                                       <t t-set="igst_tax_amt" t-value="line.price_total - line.price_subtotal"/>
                                       <td t-if="doc.is_igst" style="text-align: right;" name="th_igst_amt">
                                           <span t-esc="igst_tax_amt" t-options="{'widget': 'float', 'precision': 2}"/>
+                                          <t t-set="igst" t-value="igst + igst_tax_amt"/>
                                       </td>
 
                                       <t t-set="gst_tax_rate" t-value="0"/>
@@ -411,6 +220,7 @@
                                       <t t-set="gst_tax_amt" t-value="(line.price_total - line.price_subtotal)/2"/>
                                       <td t-if="not doc.is_igst" style="text-align: right;" name="th_igst_amt">
                                           <span t-esc="gst_tax_amt" t-options="{'widget': 'float', 'precision': 2}"/>
+                                          <t t-set="cgst" t-value="cgst + gst_tax_amt"/>
                                       </td>
 
                                       <td t-if="not doc.is_igst" style="text-align: right;" name="th_igst_rate">
@@ -423,111 +233,81 @@
                                       <t t-set="tax_amt" t-value="line.price_total - line.price_subtotal"/>
                                       <td name="td_tax_amt" class="text-end o_price_total">
                                         <span class="text-nowrap" t-esc="tax_amt" t-options="{'widget': 'float', 'precision': 2}"/>
+                                        <t t-set="total_tax" t-value="total_tax + tax_amt"/>
                                       </td>
 
-                                      <td style="text-align: right;" name="th_total">
+                                      <!-- <td style="text-align: right;" name="th_total">
                                           <span t-options="{'widget': 'float', 'precision': 2}" t-field="line.price_total"/>
-                                      </td>
+                                      </td> -->
 
                                   </t>
                                 </tr>
                             </t>
-                          </table> -->
 
-                        <table class="table table-sm o_main_table mt-0 mb-0" style="width:100%; table-layout: fixed;">                          
-                            <tr>
-                                <th name="th_sr" style="width:50%;text-align: left; margin-left:4px; background-color: black; color: white;">Invoice Summary</th>
-                                <th name="th_sr" style="width:50%;text-align: left; background-color: black; color: white; font-size: 11px"> </th>
+                            <tr style="color:black; font-size: 13px;">
+                                <td style="text-align: right;">Total</td>
+                                <td t-esc="price_subtotal" style="text-align: right;" t-options="{'widget': 'float', 'precision': 2}"/>
+                                <td t-if="doc.is_igst"/>
+                                <td t-if="doc.is_igst" t-esc="igst" style="text-align: right;" t-options="{'widget': 'float', 'precision': 2}"/>
+                                <td t-if="not doc.is_igst"/>
+                                <td t-if="not doc.is_igst" t-esc="cgst" style="text-align: right;" t-options="{'widget': 'float', 'precision': 2}"/>
+                                <td t-if="not doc.is_igst"/>
+                                <td t-if="not doc.is_igst" t-esc="cgst" style="text-align: right;" t-options="{'widget': 'float', 'precision': 2}"/>
+                                <td name="th_total" t-esc="total_tax" style="text-align: right;" t-options="{'widget': 'float', 'precision': 2}"/>
                             </tr>
-                                      
+                          </table>
+
+                        <!-- <table class="table table-sm table-borderless" style="width:100%; table-layout: fixed;">
+                            <tr>
+                                <th name="th_sr" style="width:100%;text-align: left; margin-left:4px; color: black;"></th>
+                            </tr>
                             <tr style="font-size: 15px; color:black;">
-                                <t> 
-                                    <td style="text-align: left;" name="th_sr">
-                                        <t t-set="amt_word" t-value="doc.compute_amount_in_words(doc.amount_total)"/>
-                                        <span style="margin-left:4px;">
-                                            <b>Amount in Words: </b><br/>
-                                        </span>
-                                        <span style="margin-left:4px;">
-                                             <t t-esc="amt_word"/>
-                                        </span>
-                                    </td>
-
-                                    <td style="text-align: left;" name="th_product">
-                                        <div class="col-auto col-12">
-                                            <div class="row pt-0" style="margin-left:4px;"> 
-                                                <t t-set="total_amt" t-value="doc.get_tax_total_amount()"/>
-                                                <div style="text-align:left;" class="col-6">
-                                                    <b>Total Taxable Amt.</b>
-                                                </div>
-                                                <div style="text-align:right;" class="col-6">
-                                                    <b><t t-options="{'widget': 'float', 'precision': 2}" t-esc="total_amt['total_tax_amt']"/></b>
-                                                </div>
-                                            </div>
-                                            <div t-if="not doc.is_igst" class="row pt-0" style="margin-left:4px;">
-                                                <div style="text-align:left;" class="col-6">
-                                                    <b>Total CGST</b>
-                                                </div>
-                                                <div style="text-align:right;" class="col-6">
-                                                    <b><t t-options="{'widget': 'float', 'precision': 2}" t-esc="total_amt['sgst']"/></b>
-                                                </div>
-                                            </div>
-                                            <div t-if="not doc.is_igst" class="row pt-0" style="margin-left:4px;">
-                                                <div style="text-align:left;" class="col-6">
-                                                   <b>Total SGST</b>
-                                                </div>
-                                                <div style="text-align:right;" class="col-6">
-                                                    <b><t t-options="{'widget': 'float', 'precision': 2}" t-esc="total_amt['sgst']"/></b>
-                                                </div>
-                                            </div>
-
-                                            <div t-if="doc.is_igst" class="row pt-0" style="margin-left:4px;">
-                                                <div style="text-align:left;" class="col-6">
-                                                    <b>Total IGST</b>
-                                                </div>
-                                                <div style="text-align:right;" class="col-6">
-                                                    <b><t t-options="{'widget': 'float', 'precision': 2}" t-esc="total_amt['igst']"/></b>
-                                                </div>
-                                            </div>
-                                            <div class="row pt-0 pb-0" style="margin-left:4px;margin-bottom:4px;">
-                                                <div style="text-align:left;" class="col-6">
-                                                   <b>Total Invoice Amt.</b>
-                                                </div>
-                                                <div style="text-align:right;" class="col-6">
-                                                    <b><t t-options="{'widget': 'float', 'precision': 2}" t-esc="total_amt['total_inv_amt']"/></b>
-                                                </div>
-                                            </div>                          
-
-                                        </div>
-                                    </td>
-                                </t>
+                                <td style="text-align: left;" name="th_sr">
+                                    <t t-set="amt_word" t-value="doc.compute_amount_in_words(total_tax)"/>
+                                    <span style="margin-left:4px;">
+                                        <b>Tax Amount (in Words) : <t t-esc="amt_word"/></b>
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr style="font-size: 15px; color:black;">
+                                <td style="text-align: left;" name="th_sr">
+                                    <t t-set="amt_word" t-value="doc.compute_amount_in_words(total_tax)"/>
+                                    <span style="margin-left:4px;">
+                                        <b>Company's PAN : <t t-esc="company.l10n_in_pan"/></b>
+                                    </span>
+                                </td>
                             </tr>
                             <tr>
-                                <td style="text-align: left;" name="th_sr">
+                                <td style="" name="th_sr">
                                     <div class="col-auto col-12">
                                         <div class="row pt-0" style="margin-left:4px;"> 
                                             <div style="text-align:left;" class="col-6">
-                                                <b>Company's PAN</b>
+                                                <b>Declaration</b><br/>
+                                                <span>We declair that this invoice shows the actual price of goods  described and that all particulars are true and correct </span>
                                             </div>
                                             <div style="text-align:right;" class="col-6">
-                                                <b><t t-esc="company.l10n_in_pan"/></b>
+                                                For <t t-esc="company.name" style="font-size: 22px;"/>
                                             </div>
                                         </div>
                                     </div>
                                 </td>
-                                <td style="text-align: right;"><strong>For <t t-esc="company.name" style="margin-left:10px; font-size: 22px;"/></strong> <br/> </td>
                             </tr>
                             <tr>
-                                <td style="text-align: left;" name="th_sr">
-                                    <span style="margin-left:4px;">
-                                        <b>Declaration </b><br/>
-                                    </span>
-                                    <span style="margin-left:4px;">
-                                         <t t-esc="doc.narration"/>
-                                    </span>
+                                <td style="" name="th_sr">
+                                    <div class="col-auto col-12">
+                                        <div class="row pt-0" style="margin-left:4px;"> 
+                                            <div style="text-align:left;" class="col-6">
+                                                <b>Terms &amp; Conditions :- </b><br/>
+                                                <t t-esc="doc.narration"/>
+                                            </div>
+                                            <div style="text-align:right;" class="col-6">
+                                                Authorised Signature
+                                            </div>
+                                        </div>
+                                    </div>
                                 </td>
-                                <td style="text-align: right;"><strong>Authorised Signature</strong> <br/> </td>
                             </tr>
-                        </table>
+                        </table> -->
 
                     </div>
                 </div>

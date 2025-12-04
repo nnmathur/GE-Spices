@@ -26,7 +26,7 @@
         # 'reports/sale_template_2.xml',
         
         # 'views/account_move.xml',
-        'views/sale_inherit_view.xml',
+        # 'views/sale_inherit_view.xml',
         'views/invoice_inherit_view.xml',
     ],
     'installable': True,

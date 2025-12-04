@@ -7,98 +7,374 @@
             <t t-if="not o or not 'company_id' in o">
                 <t t-set="company" t-value="res_company"/></t>
             <div t-attf-class="header o_company_#{company.id}_layout" t-att-style="report_header_style">
-                <div class="o_boxed_header" style="width: 100%; border: 2px solid black; padding-top: 5px; padding-left: 5px; padding-bottom: 5px">
+                <div class="row mb0">
+                    <div class="col-4 text-center"/>
+                    <div class="col-4 text-center">
+                        <span style="font-size: 24px; color : #0c1252;"><b>Tax Invoice</b></span>
+                    </div>
+                    <div class="col-4 text-left">
+                        <span style="font-size: 20px; color : #0c1252;"><i>(ORIGINAL FOR RECIPIENT)</i></span>
+                    </div>
+                </div>
+                <div class="o_boxed_header" style="width: 100%; border: 1px solid black; padding-top: 0px; padding-left: 0px; padding-bottom: 0px">
+                    
                     <div class="row mb0">
-                        <div class="col-12 text-center">
-                            <span style="font-size: 26px; color : #0c1252;"><b>Tax Invoice</b></span>
+                        <div class="row mb0 col-6" style="margin-left: 0px; border-right: 1px solid black; border-bottom: 1px solid black;">
+                            <div class="col-4">
+                                <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" alt="Logo" style="margin-top:25px; margin-left:0px; width: 120px; hight:120px;"/>
+                            </div>
+                            <div class="col-8 mt-1" style="font-size: 15px; color: black;">
+                                <div class="mt0 h4" t-field="company.report_header"/>
+                                <div name="company_address" class="float-end mb4">
+                                    <strong><span t-if="company.name" t-field="company.name" style="font-size: 13px; color: black;"/></strong>
+                                        <br/>
+                                        <t t-if="company.street">
+                                            <span t-field="company.street"/>,
+                                        </t>
+                                        <t t-if="company.street2">
+                                            <br/>
+                                            <span t-field="company.street2"/>,
+                                        </t>
+                                        <br/>
+                                        <t t-if="company.city">
+                                            <span t-field="company.city"/>,
+                                        </t>
+                                        <strong>
+                                        <t t-if="company.zip">
+                                            <br/>
+                                            PIN - <span t-field="company.zip"/>
+                                        </t>
+                                        <t t-if="company.zip">
+                                            <br/>
+                                            FSSAI License. No. - <span t-field="company.fssai_license_no"/>
+                                        </t>
+                                        <t t-if="company.udyam">
+                                            <br/>
+                                            <span> UDYAM: </span>
+                                            <span t-field="company.udyam"/>
+                                        </t>
+                                        <t t-if="company.vat">
+                                            <br/>
+                                            <span> GSTIN/UIN: </span>
+                                            <span t-field="company.vat"/>
+                                        </t>
+                                        <t t-if="company.state_id">
+                                            <br/>
+                                            <span> State Name: </span>
+                                            <span t-field="company.state_id.name"/>,
+                                            <span> Code: </span>
+                                            <span t-field="company.state_id.l10n_in_tin"/>
+                                        </t>
+                                        <t t-if="company.company_registry">
+                                            <br/>
+                                            <span> CIN: </span>
+                                            <span t-field="company.company_registry"/>
+                                        </t>
+                                        </strong>
+                                        <!-- <t t-if="company.mobile or company.phone">
+                                        <br/>
+                                            <span> Phone - </span>
+                                            <span t-field="company.mobile"/>,
+                                            <span t-field="company.phone"/>
+                                        </t>
+                                        <t t-if="company.email">
+                                        <br/>
+                                            <span> Email - </span>
+                                            <span t-field="company.email"/>
+                                        </t>
+                                        <t t-if="company.website">
+                                        <br/>
+                                            <span> Web - </span>
+                                            <span t-field="company.website"/>
+                                        </t> -->
+                                        
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="col-6 text-left mt-0" style="margin-left: 0px; border-bottom: 1px solid black;">
+                            <!--<span style="font-size: 16px; color : black;"><b>Ack No:- </b> <span t-field="o.ack_no"/></span><br/>-->
+                            <!--<span style="font-size: 16px; color : black;"><b>Ack Date:- </b> <span t-field="o.ack_date" t-options="{'widget': 'date','format': 'dd-MM-yyyy'}"/></span><br/>-->
+                            <!--<span style="font-size: 16px; color : black;"><b>Invoice No. :- <span t-out="doc.name"/></b></span><br/>-->
+                            <!--<span style="font-size: 16px; color : black;"><b>e-Way B.No. :- <span t-out="doc.l10n_in_transportation_doc_no"/></b></span><br/>-->
+                            <!--<span style="font-size: 16px; color : black;"><b>Invoice Dt. :- <span t-out="doc.invoice_date" t-options="{&quot;widget&quot;: &quot;date&quot;,&quot;format&quot;: &quot;dd-MM-yyyy&quot;}"/></b></span>-->
+                        
+                            <div class="row pt-2" style="margin-left:4px; border-bottom: 1px solid black;"> 
+                                <div class="col-4">
+                                    Invoice No.
+                                </div>
+                                <div class="col-1">
+                                    :
+                                </div>
+                                <div class="col-7">
+                                    <t t-esc="doc.name"/>
+                                </div>
+                            </div>
+                            <div class="row pt-2" style="margin-left:4px; border-bottom: 1px solid black;"> 
+                                <div class="col-4">
+                                    Invoice Date
+                                </div>
+                                <div class="col-1">
+                                    :
+                                </div>
+                                <div class="col-7">
+                                    <t t-esc="doc.invoice_date" t-options="{&quot;widget&quot;: &quot;date&quot;,&quot;format&quot;: &quot;dd-MM-yyyy&quot;}"/>
+                                </div>
+                            </div>
+                            <div class="row pt-2" style="margin-left:4px; border-bottom: 1px solid black;"> 
+                                <div class="col-4">
+                                    Delivery Note
+                                </div>
+                                <div class="col-1">
+                                    :
+                                </div>
+                                <div class="col-7">
+                                    <t t-esc="doc.stock_picking_id.name"/>
+                                </div>
+                            </div>
+                            <div class="row pt-2" style="margin-left:4px; border-bottom: 1px solid black;"> 
+                                <div class="col-4">
+                                    Delivery Date
+                                </div>
+                                <div class="col-1">
+                                    :
+                                </div>
+                                <div class="col-7">
+                                    <t t-esc="doc.stock_picking_id.scheduled_date" t-options="{'widget': 'date','format': 'dd-MM-yyyy'}"/>
+                                </div>
+                            </div>
+                            <div class="row pt-2" style="margin-left:4px; border-bottom: 1px solid black;"> 
+                                <div class="col-4">
+                                    Payment Terms
+                                </div>
+                                <div class="col-1">
+                                    :
+                                </div>
+                                <div class="col-7">
+                                    <t t-esc="doc.invoice_payment_term_id.name"/>
+                                </div>
+                            </div>
+                            <div class="row pt-2" style="margin-left:4px;"> 
+                                <div class="col-4">
+                                    Reference No.
+                                </div>
+                                <div class="col-1">
+                                    :
+                                </div>
+                                <div class="col-7">
+                                    <t t-esc="doc.ref"/>
+                                </div>
+                            </div>
+                            
                         </div>
                     </div>
+                    
                     <div class="row mb0">
-                        <div class="col-12 text-left">
-                            <span style="font-size: 16px; color : black;"><b>IRN No:-  <span t-field="o.l10n_in_irn_number"/></b></span>
-                        </div>
-                    </div>
-                    <!--<div class="row mb0">-->
-                    <!--    <div class="col-4 text-left">-->
-                    <!--        <span style="font-size: 15px; color : black;"><b>Ack No:- </b> <span t-field="o.invoice_date"/></span>-->
-                    <!--    </div>-->
-                    <!--    <div class="col-4 text-left">-->
-                    <!--        <span style="font-size: 15px; color : black;"><b>Ack Date:- </b> <span t-field="o.invoice_date"/></span>-->
-                    <!--    </div>-->
-                    <!--</div>-->
-                    <div class="row mb0">
-                        <div class="col-4">
-                            <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" alt="Logo" style="margin-top:10px; margin-left:20px; width: 180px; hight:180px;"/>
-                        </div>
-                        
-                        <div class="col-4 text-left mt-3">
-                            <span style="font-size: 16px; color : black;"><b>Ack No:- </b> <span t-field="o.ack_no"/></span><br/>
-                            <span style="font-size: 16px; color : black;"><b>Ack Date:- </b> <span t-field="o.ack_date" t-options="{'widget': 'date','format': 'dd-MM-yyyy'}"/></span><br/>
-                            <span style="font-size: 16px; color : black;"><b>Invoice No. :- <span t-out="doc.name"/></b></span><br/>
-                            <span style="font-size: 16px; color : black;"><b>e-Way B.No. :- <span t-out="doc.l10n_in_transportation_doc_no"/></b></span><br/>
-                            <span style="font-size: 16px; color : black;"><b>Invoice Dt. :- <span t-out="doc.invoice_date" t-options="{&quot;widget&quot;: &quot;date&quot;,&quot;format&quot;: &quot;dd-MM-yyyy&quot;}"/></b></span>
-                        </div>
-                        
-                        <div class="col-4 mt-3" style="font-size: 15px; color: black;">
-                            <div class="mt0 h4" t-field="company.report_header"/>
-                            <div name="company_address" class="float-end mb4">
-                                <strong><span t-if="company.name" t-field="company.name" style="font-size: 17px; color: black;"/></strong>
-                                    <br/>
-                                    <t t-if="company.street">
-                                        <span t-field="company.street"/>,
+                        <div class="col-6 text-left" style="margin-left: 0px; border-right: 1px solid black;">
+                            <span style="margin-left:4px;"><b>Consignee (Ship to)</b></span>
+                            <div class="row pt-0" style="margin-left:4px;"> 
+                              <div class="col-12">                                      
+                                <strong><t t-esc="doc.partner_shipping_id.name" style="font-size: 22px;"/></strong>
+                              </div>
+                            </div>
+                            <div class="row pt-0" style="margin-left:4px;"> 
+                              <div class="col-1`">
+                                <span t-out="doc.partner_shipping_id.street"/><t t-if="doc.partner_shipping_id.street2">, </t>
+                                <span t-out="doc.partner_shipping_id.street2"/><t t-if="doc.partner_shipping_id.city">, </t>
+                                <span t-out="doc.partner_shipping_id.city"/>,
+                                <span t-out="doc.partner_shipping_id.country_id.name"/><t t-if="doc.partner_shipping_id.zip">, </t>
+                                <span t-out="doc.partner_shipping_id.zip"/>
+                              </div>
+                            </div>
+                            <div class="row pt-0" style="margin-left:4px;"> 
+                              <div class="col-3">
+                                PAN/IT No.
+                              </div>
+                              <div class="col-1">
+                                :
+                              </div>
+                              <div class="col-8">
+                                <t t-esc="doc.partner_shipping_id.l10n_in_pan"/>
+                              </div>
+                            </div>
+                            <div class="row pt-0" style="margin-left:4px;"> 
+                              <div class="col-3">
+                                State Name
+                              </div>
+                              <div class="col-1">
+                                :
+                              </div>
+                              <div class="col-8">
+                                <span t-field="doc.partner_shipping_id.state_id.name"/>,
+                                <span> Code: </span>
+                                <span t-field="doc.partner_shipping_id.state_id.l10n_in_tin"/>
+                              </div>
+                            </div>
+                            
+                            <div class="row pt-0" style="margin-left:4px;"> 
+                              <div class="col-3">
+                                Contact Per.
+                              </div>
+                              <div class="col-1">
+                                :
+                              </div>
+                              <div class="col-8">
+                                <t t-if="doc.partner_shipping_id.child_ids.filtered(lambda l: l.type == 'contact')">
+                                    <t t-esc="doc.partner_shipping_id.child_ids.filtered(lambda l: l.type == 'contact')[0].name"/>
+                                </t>
+                              </div>
+                            </div>
+                            <div class="row pt-0" style="margin-left:4px;"> 
+                              <div class="col-3">
+                                Contact
+                              </div>
+                              <div class="col-1">
+                                :
+                              </div>
+                              <div class="col-8">
+                                <t t-esc="doc.partner_shipping_id.mobile"/>
+                              </div>
+                            </div>
+                            <div class="row pt-0" style="margin-left:4px;"> 
+                              <div class="col-3">
+                                E-mail
+                              </div>
+                              <div class="col-1">
+                                :
+                              </div>
+                              <div class="col-8">
+                                <t t-esc="doc.partner_shipping_id.email"/>
+                              </div>
+                            </div>
+                          
+                            <span style="margin-left:4px;"><b>Buyer (Bill to)</b></span>
+                            <div class="row pt-0" style="margin-left:4px;"> 
+                                  <div class="col-12">                                      
+                                    <strong><t t-esc="doc.partner_id.name" style="font-size: 22px;"/></strong>
+                                  </div>
+                              </div>
+                              <div class="row pt-0" style="margin-left:4px;"> 
+                                  <div class="col-12">
+                                    <span t-out="doc.partner_id.street"/><t t-if="doc.partner_id.street2">, </t>
+                                    <span t-out="doc.partner_id.street2"/><t t-if="doc.partner_id.city">, </t>
+                                    <span t-out="doc.partner_id.city"/>,
+                                    <span t-out="doc.partner_id.country_id.name"/><t t-if="doc.partner_id.zip">, </t>
+                                    <span t-out="doc.partner_id.zip"/>
+                                  </div>
+                              </div>
+                              <div class="row pt-0" style="margin-left:4px;"> 
+                                  <div class="col-3">
+                                    PAN/IT No.
+                                  </div>
+                                  <div class="col-1">
+                                    :
+                                  </div>
+                                  <div class="col-8">
+                                    <t t-esc="doc.partner_id.l10n_in_pan"/>
+                                  </div>
+                              </div>
+                              <div class="row pt-0" style="margin-left:4px;"> 
+                                  <div class="col-3">
+                                    State Name
+                                  </div>
+                                  <div class="col-1">
+                                    :
+                                  </div>
+                                  <div class="col-8">
+                                    <span t-field="doc.partner_id.state_id.name"/>,
+                                    <span> Code: </span>
+                                    <span t-field="doc.partner_id.state_id.l10n_in_tin"/>
+                                  </div>
+                              </div>
+                                
+                                <div class="row pt-0" style="margin-left:4px;"> 
+                                  <div class="col-3">
+                                    Place of Supp.
+                                  </div>
+                                  <div class="col-1">
+                                    :
+                                  </div>
+                                  <div class="col-8">
+                                    <t t-esc="doc.partner_id.PlaceOfSupply"/>
+                                  </div>
+                                </div>
+                                <div class="row pt-0" style="margin-left:4px;"> 
+                                  <div class="col-3">
+                                    Contact Per.
+                                  </div>
+                                  <div class="col-1">
+                                    :
+                                  </div>
+                                  <div class="col-8">
+                                    <t t-if="doc.partner_id.child_ids.filtered(lambda l: l.type == 'contact')">
+                                        <t t-esc="doc.partner_id.child_ids.filtered(lambda l: l.type == 'contact')[0].name"/>
                                     </t>
-                                    <t t-if="company.street2">
-                                        <br/>
-                                        <span t-field="company.street2"/>,
-                                    </t>
-                                    <br/>
-                                    <t t-if="company.city">
-                                        <span t-field="company.city"/>,
-                                    </t>
-                                    <t t-if="company.zip">
-                                        - <span t-field="company.zip"/>
-                                    </t>
-                                    <strong>
-                                    <t t-if="company.udyam">
-                                        <br/>
-                                        <span> UDYAM: </span>
-                                        <span t-field="company.udyam"/>
-                                    </t>
-                                    <t t-if="company.vat">
-                                        <br/>
-                                        <span> GSTIN/UIN: </span>
-                                        <span t-field="company.vat"/>
-                                    </t>
-                                    <t t-if="company.state_id">
-                                        <br/>
-                                        <span> State Name: </span>
-                                        <span t-field="company.state_id.name"/>,
-                                        <span> Code: </span>
-                                        <span t-field="company.state_id.l10n_in_tin"/>
-                                    </t>
-                                    <t t-if="company.company_registry">
-                                        <br/>
-                                        <span> CIN: </span>
-                                        <span t-field="company.company_registry"/>
-                                    </t>
-                                    </strong>
-                                    <!-- <t t-if="company.mobile or company.phone">
-                                    <br/>
-                                        <span> Phone - </span>
-                                        <span t-field="company.mobile"/>,
-                                        <span t-field="company.phone"/>
-                                    </t>
-                                    <t t-if="company.email">
-                                    <br/>
-                                        <span> Email - </span>
-                                        <span t-field="company.email"/>
-                                    </t>
-                                    <t t-if="company.website">
-                                    <br/>
-                                        <span> Web - </span>
-                                        <span t-field="company.website"/>
-                                    </t> -->
-                                    
+                                  </div>
+                                </div>
+                                <div class="row pt-0" style="margin-left:4px;"> 
+                                  <div class="col-3">
+                                    Contact
+                                  </div>
+                                  <div class="col-1">
+                                    :
+                                  </div>
+                                  <div class="col-8">
+                                    <t t-esc="doc.partner_id.mobile"/>
+                                  </div>
+                                </div>
+                                <div class="row pt-0" style="margin-left:4px;"> 
+                                  <div class="col-3">
+                                    E-mail
+                                  </div>
+                                  <div class="col-1">
+                                    :
+                                  </div>
+                                  <div class="col-8">
+                                    <t t-esc="doc.partner_id.email"/>
+                                  </div>
+                                </div>
+                            </div>
+                        <div class="col-6 text-left" style="margin-left: 0px;">
+                            
+                            <div class="row pt-2" style="margin-left:4px; border-bottom: 1px solid black;"> 
+                                <div class="col-4">
+                                    Reference Date
+                                </div>
+                                <div class="col-1">
+                                    :
+                                </div>
+                                <div class="col-7">
+                                    <t t-esc="doc.buyers_po_date" t-options="{'widget': 'date','format': 'dd-MM-yyyy'}"/>
+                                </div>
+                            </div>
+                            <div class="row pt-2" style="margin-left:4px; border-bottom: 1px solid black;"> 
+                                <div class="col-4">
+                                    Dispatched Through
+                                </div>
+                                <div class="col-1">
+                                    :
+                                </div>
+                                <div class="col-7">
+                                    <t t-esc="doc._fields['l10n_in_mode'].convert_to_export(doc.l10n_in_mode, doc)"/>
+                                </div>
+                            </div>
+                            <div class="row pt-2" style="margin-left:4px; border-bottom: 1px solid black;"> 
+                                <div class="col-4">
+                                    Destination
+                                </div>
+                                <div class="col-1">
+                                    :
+                                </div>
+                                <div class="col-7">
+                                    <t t-set="order_date" t-value="doc.get_sale_order()['date']"/>
+                                    <t t-esc="doc.l10n_in_state_id.name"/>
+                                </div>
+                            </div>
+                            
+                            <div class="row pt-2" style="margin-left:4px;"> 
+                                <div class="col-12">
+                                    Terms of Delivery
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -123,14 +399,67 @@
             </div>
  -->
             <div t-attf-class="footer o_boxed_footer o_company_#{company.id}_layout">
-                <div class="text-center text-muted" style="border-top: 1px solid black;">
+                <div class="text-center text-muted" style="border: 1px solid black;">
                     <div t-if="report_type == 'pdf'">
-                        <p>
-                            This is a Computer Generated Invoice
-                            <br/>
-                            <div t-if="report_type == 'pdf'" class="text-nowrap">Page <span class="page"/> / <span class="topage"/></div>
-                        </p>
+                        <table class="table table-sm table-borderless" style="width:100%; table-layout: fixed;">
+                            <tr>
+                                <th name="th_sr" style="width:100%;text-align: left; margin-left:4px; color: black;"></th>
+                            </tr>
+                            <tr style="font-size: 15px; color:black;">
+                                <td style="text-align: left;" name="th_sr">
+                                    <t t-set="amt_word" t-value="doc.compute_amount_in_words(total_tax)"/>
+                                    <span style="margin-left:4px;">
+                                        <b>Tax Amount (in Words) : <t t-esc="amt_word"/></b>
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr style="font-size: 15px; color:black;">
+                                <td style="text-align: left;" name="th_sr">
+                                    <t t-set="amt_word" t-value="doc.compute_amount_in_words(total_tax)"/>
+                                    <span style="margin-left:4px;">
+                                        <b>Company's PAN : <t t-esc="company.l10n_in_pan"/></b>
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="" name="th_sr">
+                                    <div class="col-auto col-12">
+                                        <div class="row pt-0" style="margin-left:4px;"> 
+                                            <div style="text-align:left;" class="col-6">
+                                                <b>Declaration</b><br/>
+                                                <span>We declair that this invoice shows the actual price of goods  described and that all particulars are true and correct </span>
+                                            </div>
+                                            <div style="text-align:right; border-top: 1px solid black; border-left: 1px solid black;" class="col-6">
+                                                For <t t-esc="company.name" style="font-size: 22px;"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="" name="th_sr">
+                                    <div class="col-auto col-12">
+                                        <div class="row pt-0" style="margin-left:4px;"> 
+                                            <div style="text-align:left;" class="col-6">
+                                                <b>Terms &amp; Conditions :- </b><br/>
+                                                <t t-esc="doc.narration"/>
+                                            </div>
+                                            <div style="text-align:right; border-left: 1px solid black;" class="col-6">
+                                                Authorised Signature
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
+                </div>
+                <div class="text-center text-muted" style="border: 0px solid black;">
+                    <p>
+                        This is a Computer Generated Invoice
+                        <br/>
+                        <div style="margin-top:-12px;" t-if="report_type == 'pdf'" class="text-nowrap">Page <span class="page"/> / <span class="topage"/></div>
+                    </p>
                 </div>
             </div>
         </template>

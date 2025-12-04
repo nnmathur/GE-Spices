@@ -53,9 +53,16 @@ class AccountMove(models.Model):
     fg_charges = fields.Float('Freight Charges(Included)')
     inc_charges = fields.Float('Insurance Charges(Included)')
     other_charges = fields.Float('Other(Plz Specify) ')
+    total_qty = fields.Float(string='Total Quantity', compute='_compute_total_qty')
 
     qr_code = fields.Binary('QR Code', compute="_generate_qr")
 
+    def _compute_total_qty(self):
+        for rec in self:
+            if rec.invoice_line_ids:
+                rec.total_qty = sum(rec.invoice_line_ids.mapped('quantity'))
+            else:
+                rec.total_qty = 0
     def _compute_is_igst_invoice(self):
         for rec in self:
             is_igst = False
@@ -237,6 +244,7 @@ class AccountLine(models.Model):
 class ResCompany(models.Model):
     _inherit = 'res.company'
 
+    fssai_license_no = fields.Char("FSSAI License. No")
     udyam = fields.Char("UDYAM")
     bank_name = fields.Char('Bank Name')
     bank_ifsc = fields.Char('IFSC Code')

@@ -11,17 +11,17 @@ class AccountMoveLine(models.Model):
     damage_discount = fields.Float(string="Scheme Dist.(%)", default=0.0)
     spl_discount = fields.Float(string="Spl Dist.(%)", default=0.0)
 
-    fixed_discount_amt = fields.Float(string="Fixed Amt.", compute='_compute_discounts')
-    damage_discount_amt = fields.Float(string="Scheme Amt.", compute='_compute_discounts')
-    spl_discount_amt = fields.Float(string="Spl Amt.", compute='_compute_discounts')
+    fixed_discount_amt = fields.Float(string="Fixed Amt.")
+    damage_discount_amt = fields.Float(string="Scheme Amt.")
+    spl_discount_amt = fields.Float(string="Spl Amt.")
 
-    @api.depends('fixed_discount','damage_discount','spl_discount', 'price_unit', 'quantity')
-    def _compute_discounts(self):
-        for rec in self:
-            rec.fixed_discount_amt = ((rec.quantity * rec.price_unit) * rec.fixed_discount) / 100
-            rec.damage_discount_amt = ((rec.quantity * rec.price_unit) * rec.damage_discount) / 100
-            rec.spl_discount_amt = ((rec.quantity * rec.price_unit) * rec.spl_discount) / 100
-            rec.discount = rec.fixed_discount + rec.damage_discount + rec.spl_discount
+    # @api.depends('fixed_discount','damage_discount','spl_discount', 'price_unit', 'quantity')
+    # def _compute_discounts(self):
+    #     for rec in self:
+    #         rec.fixed_discount_amt = ((rec.quantity * rec.price_unit) * rec.fixed_discount) / 100
+    #         rec.damage_discount_amt = ((rec.quantity * rec.price_unit) * rec.damage_discount) / 100
+    #         rec.spl_discount_amt = ((rec.quantity * rec.price_unit) * rec.spl_discount) / 100
+    #         rec.discount = rec.fixed_discount + rec.damage_discount + rec.spl_discount
 
     '''
     @api.depends(
