@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_emp_primary_sales_wiz,emp_primary_sales_wiz,model_emp_primary_sales_wiz,,1,1,1,1
+access_emp_dist_primary_wiz,emp_dist_primary_wiz,model_emp_dist_primary_wiz,,1,1,1,1

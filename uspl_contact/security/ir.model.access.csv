@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_beat_beat,access_beat_beat,model_beat_beat,base.group_user,1,1,1,1
+access_outlet_outlet,access_outlet_outlet,model_outlet_outlet,base.group_user,1,1,1,1

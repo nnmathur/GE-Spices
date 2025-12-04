@@ -1,0 +1,22 @@
+{
+    'name': 'USPL FieldAssist Connector',
+    'version': "0.1",
+    'sequence': 50,
+    'version': '1.0',
+    'license': 'LGPL-3',
+    'support': 'unilinkindia.com',
+    'author': 'UnilinkIndia Software Pvt. Ltd.',
+    'website': 'http://unilinkindia.com',
+    'category': 'Integration',
+    'summary': 'Sync products from Odoo to FieldAssist',
+    'description': 'Basic connector to push product data to FieldAssist via API',
+    'depends': ['base', 'base_setup', 'product', 'uspl_scheme', 'uspl_visit_detailed_module'],
+    'data': [
+        'views/distributer_view.xml',
+        'views/product_view.xml',
+        'views/res_config_settings_view.xml',
+        'views/detailed_visit_view_inherit.xml',
+    ],
+    'installable': True,
+    'application': False,
+}

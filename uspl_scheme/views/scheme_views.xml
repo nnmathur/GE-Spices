@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_scheme_tree" model="ir.ui.view">
+        <field name="name">scheme.scheme.list</field>
+        <field name="model">scheme.scheme</field>
+        <field name="arch" type="xml">
+            <list string="Schemes">
+                <field name="scheme_name"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+                <field name="scheme_category"/>
+                <field name="payout_type"/>
+                <field name="scheme_budget"/>
+                <field name="state" string='Status' widget="badge" decoration-success="state == 'expired'" decoration-warning="state == 'running'" decoration-info="state == 'draft'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_scheme_form" model="ir.ui.view">
+        <field name="name">scheme.scheme.form</field>
+        <field name="model">scheme.scheme</field>
+        <field name="arch" type="xml">
+            <form string="Scheme">
+                <header>
+                    <button name="action_running" string="Running" type="object" class="oe_highlight"  invisible="state != 'draft'"/>
+                    <button name="action_expired" string="Expire" type="object" class="oe_highlight"  invisible="state != 'running'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,running,expired"/>
+                </header>
+                <sheet>
+                    <div class="oe_title mb24">
+                        <h1>                            
+                            <field id="name" class="text-break" name="name" readonly='1' />
+                        </h1>                         
+                    </div>
+                    <group>
+                        <group>
+                            <field name="scheme_name" required='1'/>
+                            <field name="start_date" required='1'/>
+                            <field name="end_date" required='1'/>
+                            <field name="scheme_category"/>
+                            <field name="scheme_description"/>
+                            <field name="payout_type"/>
+                            <field name="payout_calculation_type"/>
+                            <field name="constraint_on"/>
+                            <field name="payout_in"/>
+                            <field name="scheme_budget"/>
+                            <field name="applicable_at_level"/>
+                        </group>
+                        <group>
+                            <field name="applicable_on_entity"/>
+                            <field name="scheme_on"/>
+                            <field name="scheme_on_entity"/>
+                            <field name="eligible_on"/>
+                            <field name="eligible_on_entity"/>
+                            <field name="scheme_type"/>
+                            <field name="scheme_sub_type1"/>
+                            <field name="scheme_sub_type2"/>
+                            <field name="is_inclusive"/>
+                            <field name="outlet_constraints"/>
+                            <field name="product_filter_constraints"/>
+                            <field name="scheme_slabs"/>
+                        </group>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_scheme" model="ir.actions.act_window">
+        <field name="name">Schemes</field>
+        <field name="res_model">scheme.scheme</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_scheme_root" name="Schemes"/>
+    <menuitem id="menu_scheme" name="Manage Schemes" parent="menu_scheme_root" action="action_scheme"/>
+</odoo>

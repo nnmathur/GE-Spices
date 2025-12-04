@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_move_form_inherit" model="ir.ui.view">
+        <field name="name">account.move.form.inherit</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='payment_reference']" position="after">
+                <field name="ref" string='Customer Reference' invisible="move_type not in ('out_invoice', 'out_refund')" readonly="state != 'draft'"/>
+                <field name="buyers_po_date" invisible="move_type not in ('out_invoice', 'out_refund')" readonly="state != 'draft'"/>
+            </xpath>
+            <xpath expr="//page[@name='other_info']//group[@id='other_tab_group']" position="after">
+                <group id="other_group">
+                    <group string="transporter's Details" name="transporter_detaiils_group" invisible="move_type not in ('out_invoice', 'out_refund')">
+                        <!-- <field name="goods_covered"/> -->
+                        <field name="trnsportation_mode"/>
+                        <field name="transporter"/>
+                        <field name="docket_no"/>
+                        <field name="vehicle_no"/>
+                    </group>
+                    <group string="Other Cost" name="other_cost_group" invisible="move_type not in ('out_invoice', 'out_refund', 'in_invoice', 'in_refund')">
+                        <field name="packing_charges"/>
+                        <field name="fg_charges"/>
+                        <field name="inc_charges"/>
+                        <field name="other_charges"/>
+                        <field name="qr_code" widget='image' class="oe_avatar" />
+                    </group>
+                </group>
+            </xpath>
+
+            <!-- <xpath expr="//page[@name='invoice_tab']//field[@name='invoice_line_ids']//tree//field[@name='quantity']" position="attributes">
+                <attribute name="optional">hide</attribute>
+            </xpath>
+            <xpath expr="//page[@name='invoice_tab']//field[@name='invoice_line_ids']//tree//field[@name='quantity']" position="before">
+                <field name="cus_quantity" />
+            </xpath>
+
+            <xpath expr="//page[@name='invoice_tab']//field[@name='invoice_line_ids']//tree//field[@name='price_subtotal']" position="before">
+                <field name="packing" />
+                <field name="transportation"/>
+            </xpath> -->
+        </field>
+    </record>
+
+    <!-- Sale Order view inherit -->
+    <record id="view_order_form_inhherit" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='has_active_pricelist']" position="before">
+                <field name="client_order_ref" />
+                <field name="buyers_po_date"/>
+            </xpath>
+
+            <xpath expr="//page[@name='order_lines']//tree//field[@name='product_uom_qty']" position="attributes">
+                <attribute name="optional">hide</attribute>
+            </xpath>
+            <xpath expr="//page[@name='order_lines']//tree//field[@name='product_uom_qty']" position="before">
+                <field name="cus_product_uom_qty" />
+            </xpath>
+            <xpath expr="//page[@name='order_lines']//tree//field[@name='price_subtotal']" position="before">
+                <field name="packing" />
+                <field name="transportation"/>
+            </xpath>
+
+            <xpath expr="//field[@name='validity_date']" position="after">
+                <field name="commitment_date" />
+                <!-- <field name="delivery_date" /> -->
+            </xpath>
+            <xpath expr="//field[@name='incoterm']" position="before">
+                <field name="net_wght" />
+                <field name="gross_wght"/>
+
+                <field name="trnsportation_mode"/>
+                <field name="ship_type"/>
+                <field name="port_load"/>
+                <field name="port_disc"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Company view inherit -->
+    <record id="view_company_form_inhherit" model="ir.ui.view">
+        <field name="name">res.company.form.inherit</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='color']" position="after">
+                <field name="payment_barcode" widget="image" class="oe_avatar"/>
+            </xpath>
+            <xpath expr="//field[@name='currency_id']" position="after">
+                <field name="msme" />
+                <field name="bank_name"/>
+                <field name="bank_ifsc"/>
+                <field name="bank_account"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Contact view inherit -->
+    <record id="view_partner_form_inhherit" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <!-- <xpath expr="//form/group/group//field[@name='vat']" position="after"> -->
+            <xpath expr="//field[@name='company_type']" position="after">
+                <br/><field name="contact_type" widget="radio" options="{'horizontal': true}"/>
+            </xpath>
+            <xpath expr="//field[@name='category_id']" position="after">
+                <field name="product_ids" widget="many2many_tags"/>
+            </xpath>
+            <xpath expr="//form//group/group" position="inside">
+                <field name="addhar_no" />
+                <field name="invoice_seq" />
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Journal view inherit -->
+    <record id="view_account_journal_form_inherit" model="ir.ui.view">
+        <field name="name">account.journal.form.inherit</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.view_account_journal_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='code']" position="after">
+                <field name="sequence_id" invisible="type != 'sale'"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- settings Form View Start -->
+        <record id="res_config_settings_view_form_inherit" model="ir.ui.view">
+            <field name="name">res.config.settings.production.delivery</field>
+            <field name="model">res.config.settings</field>
+            <field name="active">False</field>
+            <field name="inherit_id" ref="sale_management.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <setting id="standardized_offers_setting" position="replace">
+                    <setting id="standardized_offers_setting" help="Create standardized offers with default products" documentation="/applications/sales/sales/send_quotations/quote_template.html">
+                        <field name="group_sale_order_template"/>
+                        <div class="content-group" invisible="not group_sale_order_template">
+                            <div class="mt16">
+                                <label for="company_so_template_id" class="o_light_label mr8"/>
+                                <field name="company_so_template_id" class="oe_inline"/>
+                                <span class="fa fa-lg fa-building-o p-2" title="Values set here are company-specific." groups="base.group_multi_company"/>
+                            </div>
+                            <div class="mt8">
+                                <button name="807" icon="oi-arrow-right" type="action" string="Quotation Templates" class="btn-link"/>
+                            </div>
+                        </div>
+                        
+                        <div class="content-group">
+                            <div class="mt16">
+                                <strong><label for="invoice_tmc" class="o_light_label mr8"/></strong>
+                                <field name="invoice_tmc" class="oe_inline"/>
+                            </div>
+                        </div>
+                        
+                    </setting>
+                </setting>
+            </field>
+        </record>
+
+
+</odoo>

@@ -1,0 +1,53 @@
+<odoo>
+    <data>
+        <!-- Form Start -->
+            <record id="delivered_qty_wizard_form" model="ir.ui.view">
+                <field name="name">delivered.qty.wizard.form</field>
+                <field name="model">delivered.qty.wizard</field>
+                <field name="arch" type="xml">
+                    <form string="Release Quantity">
+                        <sheet>
+                            <div class="oe_title mb24">
+                                <h1>                            
+                                    <field id="sale_id" class="text-break" name="sale_id" readonly='1' widget='selection'/>
+                                </h1>                         
+                            </div>
+                            <group>
+                                <notebook>
+                                    <page string='Product Line'>
+                                        <field name='line_ids'>
+                                            <list editable='bottom' create='0' edit='1' delete='0'>
+                                                <field name='product_id' readonly='1'/>
+                                                <field name='quantity' readonly='1'/>
+                                                <field name='delivery_quantity'/>
+                                            </list>
+                                        </field>
+                                    </page>
+                                </notebook>
+                            </group>
+                        </sheet>
+                        <footer>
+                            <button name="action_release_qty" string="Deliver Stock" type="object" class="btn-primary"/>
+                            <button string="Cancel" class="btn-secondary" special="cancel"/>
+                        </footer>
+                    </form>
+                </field>
+            </record>
+        <!-- Form End -->
+
+        <!-- <record id="action_detailed_wizard" model="ir.actions.act_window">
+            <field name="name">Visit Wizard</field>
+            <field name="res_model">delivered.qty.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="view_id" ref="uspl_visit_detailed_module.delivered_qty_wizard_form"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    No Visit Wizard were made for this product yet!
+                </p>
+            </field>
+        </record> -->
+
+    </data>
+
+</odoo>

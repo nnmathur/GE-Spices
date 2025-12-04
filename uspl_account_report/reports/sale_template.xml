@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<template id="report_saleorder_document_inherit_uspl" inherit_id="sale.report_saleorder_document">
+    <xpath expr="//td[@name='td_quantity']" position="replace">
+        <td name="td_quantity" class="text-end">
+            <span t-field="line.cus_product_uom_qty">3</span>
+            <span t-field="line.product_uom">units</span>
+            <span t-if="line.product_packaging_id">
+                (<span t-field="line.product_packaging_qty" t-options='{"widget": "integer"}'/> <span t-field="line.product_packaging_id"/>)
+            </span>
+        </td>
+    </xpath>
+    <xpath expr="//div[@name='so_total_summary']" position="replace">
+        <div t-if="doc.note">
+            <table class="table table-sm o_main_table mt-0 mb-0" style="width:100%">                          
+                <tr >
+                    <t> 
+                        <td style="text-align: left; width:50%" name="th_sr">
+                            <t t-esc="doc.note"/>
+                        </td>
+    
+                        <td style="text-align: left; width:50%" name="th_product">
+                            <div class="clearfix" name="so_total_summary" style="width:100%">
+                                <div id="total" class="row" name="total" style="width:100%">
+                                    <div t-attf-class="#{'col-6' if report_type != 'html' else 'col-sm-7 col-md-6'} ms-auto" style="width:100%">
+                                        <table class="table table-sm table-borderless" style="width:100%">
+                                            <!-- Tax totals -->
+                                            <t t-set="tax_totals" t-value="doc.tax_totals"/>
+                                            <t t-call="sale.document_tax_totals"/>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </t>
+                </tr>
+            </table>
+        </div>
+        
+        <div t-else="" class="clearfix" name="so_total_summary">
+            <div id="total" class="row" name="total">
+                <div t-attf-class="#{'col-6' if report_type != 'html' else 'col-sm-7 col-md-6'} ms-auto">
+                    <table class="table table-sm table-borderless">
+                        <!-- Tax totals -->
+                        <t t-set="tax_totals" t-value="doc.tax_totals"/>
+                        <t t-call="sale.document_tax_totals"/>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </xpath>
+
+    <xpath expr="//span[@name='order_note']" position="replace">
+    </xpath>
+</template>
+</odoo>

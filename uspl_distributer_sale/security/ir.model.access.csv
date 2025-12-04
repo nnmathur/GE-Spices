@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_visitor_sales,visitor_sales,model_visitor_sales,base.group_user,1,1,1,1
+access_visitor_sales_line,visitor_sales_line,model_visitor_sales_line,base.group_user,1,1,1,1
+
+access_delivered_qty_wizard,delivered_qty_wizard,model_delivered_qty_wizard,base.group_user,1,1,1,1
+access_delivered_qty_line,delivered_qty_line,model_delivered_qty_line,base.group_user,1,1,1,1

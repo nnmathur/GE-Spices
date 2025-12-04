@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="beat_list_view">
+        <field name="name">beat.beat.list</field>
+        <field name="model">beat.beat</field>
+        <field name="arch" type="xml">
+            <list string="Beats" editable='bottom'>
+                <field name="name" required='1'/>
+                <field name="distributor_id" required='1'/>
+            </list>
+        </field>
+    </record>
+    
+    <record id="view_beat_search" model="ir.ui.view">
+        <field name="name">beat.beat.search</field>
+        <field name="model">beat.beat</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" />
+                <field name="distributor_id" />
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_beat">
+        <field name="name">Beats</field>
+        <field name="res_model">beat.beat</field>
+        <field name="view_mode">list</field>
+    </record>
+
+    <menuitem id="menu_beats" name="Beats" parent="contacts.res_partner_menu_config" action="action_beat" sequence="10"/>
+
+    <!-- <menuitem 
+            id="beat_menu"
+            string='Beats'
+            parent="contacts.res_partner_menu_config"
+            action="uspl_contact.action_beat"
+            sequence="10" /> -->
+
+<!-- Outlets -->
+    <record model="ir.ui.view" id="outlet_list_view">
+        <field name="name">outlet.outlet.list</field>
+        <field name="model">outlet.outlet</field>
+        <field name="arch" type="xml">
+            <list string="Outlets" editable='bottom'>
+                <field name="name" required='1'/>
+                <field name="distributor_id" required='1'/>
+                <field name="beat_id" required='1'/>
+            </list>
+        </field>
+    </record>
+    
+    <record id="view_outlet_search" model="ir.ui.view">
+        <field name="name">outlet.outlet.search</field>
+        <field name="model">outlet.outlet</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" />
+                <field name="distributor_id" />
+                <field name="beat_id" />
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_outlet">
+        <field name="name">Outlets</field>
+        <field name="res_model">outlet.outlet</field>
+        <field name="view_mode">list</field>
+    </record>
+
+    <menuitem id="menu_outlet" name="Outlets" parent="contacts.res_partner_menu_config" action="action_outlet" sequence="11"/>
+
+</odoo>
