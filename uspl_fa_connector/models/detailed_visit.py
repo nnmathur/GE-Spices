@@ -35,7 +35,7 @@ class Partner(models.Model):
             distributor_id = False
             distributor = self.env['beat.beat'].search([('name', '=', dist["BeatName"])])
             if distributor:
-                distributor_id = distributor.distributor_id.id
+                distributor_id = distributor[0].distributor_id.id
 
             vals = {
                     'visitguid'  : dist["VisitGuid"],
