@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>    
+    <record id="view_scheme_form_inherit" model="ir.ui.view">
+        <field name="name">scheme.scheme.form.inherit</field>
+        <field name="model">scheme.scheme</field>
+        <field name="inherit_id" ref="uspl_scheme.view_scheme_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='applicable_on_entity']" position="replace">
+                <field name='pricelist_id' force_save='1'/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

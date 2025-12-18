@@ -7,7 +7,18 @@
         <field name="inherit_id" ref="product.product_template_form_view"/>
         <field name="arch" type="xml">
             <xpath expr="//label[@for='list_price']" position="before">
-                <field name="mrp"/>
+                <field name="new_mrp"/>
+            </xpath>            
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_order_form_inherit">
+        <field name="name">sale.order.form.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']/list//field[@name='price_unit']" position="before">
+                <field name="mrp" readonly='0'/>
             </xpath>            
         </field>
     </record>

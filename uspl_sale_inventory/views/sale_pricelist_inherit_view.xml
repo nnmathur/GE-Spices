@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Inherit Search View -->
+    <!-- <record id="view_res_partner_filter_inherit" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">            
+            <xpath expr="//field[@name='name']" position="after">
+                <field name='comment' string='Internal Notes' filter_domain="[('comment', 'ilike', self)]"/>
+                <field name='facebbok' string='Social Media' filter_domain="['|', '|', '|', '|', ('facebbok', 'ilike', self), ('instagram', 'ilike', self), ('twiter', 'ilike', self), ('linkedin', 'ilike', self), ('youtube', 'ilike', self)]"/>
+            </xpath>
+        </field>
+    </record> -->
+    
+    <!-- Contact form -->
+    <record id="product_pricelist_view_inherit" model="ir.ui.view">
+        <field name="name">product.pricelist.form.inherit</field>
+        <field name="model">product.pricelist</field>
+        <field name="inherit_id" ref="product.product_pricelist_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='country_group_ids']" position="before">
+                <field name="scheme_id"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="product_pricelist_item_form_view_inherit" model="ir.ui.view">
+        <field name="name">product.pricelist.item.form.inherit</field>
+        <field name="model">product.pricelist.item</field>
+        <field name="inherit_id" ref="product.product_pricelist_item_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='categ_id']" position="before">
+                <field name="product_template_ids" widget='many2many_tags' options="{'no_create':1}" invisible="display_applied_on != '1_product'"/>
+            </xpath>
+            <xpath expr="//field[@name='categ_id']" position="before">
+                <field name="category_ids" widget='many2many_tags' options="{'no_create':1}" invisible="display_applied_on != '2_product_category'"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

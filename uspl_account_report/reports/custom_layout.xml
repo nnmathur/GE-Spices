@@ -23,7 +23,7 @@
                             <div class="col-4">
                                 <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" alt="Logo" style="margin-top:25px; margin-left:0px; width: 120px; hight:120px;"/>
                             </div>
-                            <div class="col-8 mt-1" style="font-size: 15px; color: black;">
+                            <div class="col-8 mt-1" style="font-size: 13px; color: black;">
                                 <div class="mt0 h4" t-field="company.report_header"/>
                                 <div name="company_address" class="float-end mb4">
                                     <strong><span t-if="company.name" t-field="company.name" style="font-size: 13px; color: black;"/></strong>
@@ -35,8 +35,8 @@
                                             <br/>
                                             <span t-field="company.street2"/>,
                                         </t>
-                                        <br/>
                                         <t t-if="company.city">
+                                            <br/>
                                             <span t-field="company.city"/>,
                                         </t>
                                         <strong>
