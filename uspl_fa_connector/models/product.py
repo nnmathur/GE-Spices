@@ -7,6 +7,7 @@ class ProductTemplate(models.Model):
     _inherit = "product.template"
 
     def action_sync_to_fieldassist(self):
+        return
         self.action_get_location()
 
         username = self.env['ir.config_parameter'].sudo().get_param('fa.api.url')

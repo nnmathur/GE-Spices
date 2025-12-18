@@ -17,6 +17,7 @@ class Partner(models.Model):
     ], default='pending', string="FA Sync Status")
 
     def action_get_beats(self):
+        return
         username = self.env['ir.config_parameter'].sudo().get_param('fa.api.url')
         password = self.env['ir.config_parameter'].sudo().get_param('fa.api.token')
         
@@ -38,6 +39,7 @@ class Partner(models.Model):
                 print("Error:", response.text)
 
     def action_get_outlets(self):
+        return
         username = self.env['ir.config_parameter'].sudo().get_param('fa.api.url')
         password = self.env['ir.config_parameter'].sudo().get_param('fa.api.token')
         
@@ -58,6 +60,7 @@ class Partner(models.Model):
                 print("Error:", response.text)
 
     def action_sync_to_fieldassist(self):
+        return
         username = self.env['ir.config_parameter'].sudo().get_param('fa.api.url')
         password = self.env['ir.config_parameter'].sudo().get_param('fa.api.token')
         today = datetime.today().strftime("%Y-%m-%d")
@@ -89,6 +92,7 @@ class Partner(models.Model):
             print("Error:", response.text)
 
     def action_create_distributer(self, distributers):
+        return
         for dist in distributers:
             partner_id = self.env['res.partner'].sudo().search(['|', ('name', '=', dist["Name"]), ('email', '=', dist["EmailId"])])
             if not partner_id or partner_id:

@@ -31,6 +31,7 @@ class Partner(models.Model):
             print("Error:", response.text)
 
     def action_create_visits(self, distributers):
+        return
         for dist in distributers:
             distributor_id = False
             distributor = self.env['beat.beat'].search([('name', '=', dist["BeatName"])])
