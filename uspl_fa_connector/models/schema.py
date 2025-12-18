@@ -38,7 +38,7 @@ class Scheme(models.Model):
 
     def action_create_distributer(self, shceme):
         for dist in shceme:
-            return pass
+            return
             partner_id = self.env['res.partner'].sudo().search(['|', ('name', '=', dist["Name"]), ('email', '=', dist["EmailId"])])
             # if not partner_id or partner_id:
             vals = {
