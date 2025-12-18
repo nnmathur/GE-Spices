@@ -19,7 +19,6 @@
         # 'data/data.xml',
         'views/scheme_view_inherit.xml',
         'views/sale_pricelist_inherit_view.xml',
-
     ],
     'installable': True,
     'application': False,
