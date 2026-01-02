@@ -14,7 +14,7 @@ class SaleOrderLine(models.Model):
 
     def _compute_price_unit(self):
         for rec in self:
-            pricelist_item_line = rec.pricelist_id.item_ids.filtered(lambda l: l.product_tmpl_id.id == rec.product_template_id.id)
+            pricelist_item_line = rec.order_id.pricelist_id.item_ids.filtered(lambda l: l.product_tmpl_id.id == rec.product_template_id.id)
             if pricelist_item_line:
                 line = pricelist_item_line.base_pricelist_id.item_ids.filtered(lambda l: l.product_tmpl_id.id == rec.product_template_id.id)
                 rec.price_unit = line.fixed_price
