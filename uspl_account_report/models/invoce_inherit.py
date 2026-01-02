@@ -15,6 +15,12 @@ class AccountMoveLine(models.Model):
     damage_discount_amt = fields.Float(string="Scheme Amt.")
     spl_discount_amt = fields.Float(string="Spl Amt.")
 
+    @api.depends('product_id')
+    def _compute_mrp(self):
+        for rec in self:
+            company = rec.company_id.id
+            rec.mrp = rec.product_id.with_company(company).new_mrp
+
     # @api.depends('fixed_discount','damage_discount','spl_discount', 'price_unit', 'quantity')
     # def _compute_discounts(self):
     #     for rec in self:

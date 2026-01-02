@@ -12,6 +12,14 @@ class SaleOrderLine(models.Model):
 
     mrp = fields.Float(string='MRP', compute='_compute_mrp', store=True)
 
+    def _compute_price_unit(self):
+        for rec in self:
+            pricelist_item_line = rec.pricelist_id.item_ids.filtered(lambda l: l.product_tmpl_id.id == rec.product_template_id.id)
+            if pricelist_item_line:
+                line = pricelist_item_line.base_pricelist_id.item_ids.filtered(lambda l: l.product_tmpl_id.id == rec.product_template_id.id)
+                rec.price_unit = line.fixed_price
+        super()._compute_price_unit()
+
     @api.depends('product_id', 'product_template_id')
     def _compute_mrp(self):
         for rec in self:
@@ -37,3 +45,14 @@ class Product(models.Model):
 
     # mrp = product.with_company(company).mrp
     new_mrp = fields.Float(string='MRP', company_dependent=True)
+
+class AccountMoveLine(models.Model):
+    _inherit = 'account.move.line'
+
+    mrp = fields.Float(string='MRP', compute='_compute_mrp', store=True)
+
+    @api.depends('product_id')
+    def _compute_mrp(self):
+        for rec in self:
+            company = rec.company_id.id
+            rec.mrp = rec.product_id.with_company(company).new_mrp
