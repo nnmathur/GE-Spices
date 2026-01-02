@@ -17,25 +17,29 @@ class SaleOrderLine(models.Model):
         digits='Product Price',
         store=True, readonly=False, required=True, precompute=True)
     
-    @api.depends('product_id', 'product_uom', 'product_uom_qty')
+    @api.depends('product_template_id', 'product_id', 'product_uom', 'product_uom_qty')
     def _compute_price_unit_custom(self):
         for rec in self:
+            print('\n==BESSI THE GIRAFFE NOTEBOOK', rec, rec.mapped('product_id'), rec.mapped('product_template_id'))
             is_old = True
             pricelist_item_line = rec.order_id.pricelist_id.item_ids.filtered(lambda l: l.product_tmpl_id.id == rec.product_template_id.id)
+            print('\n\n==pricelist_item_line====',pricelist_item_line, rec.order_id.pricelist_id.item_ids)
+            print('\n\n==pricelist_item_line====',pricelist_item_line, rec.order_id.pricelist_id.item_ids.mapped('product_tmpl_id.product_variant_id'), '==c  ',rec.product_template_id, rec.product_id)
             if pricelist_item_line:
                 line = pricelist_item_line.base_pricelist_id.item_ids.filtered(lambda l: l.product_tmpl_id.id == rec.product_template_id.id)
                 if line:
-                    rec.price_unit = line.fixed_price
                     rec.discount = pricelist_item_line.percent_price
-                    is_old = False
+                    rec.price_unit = line.fixed_price
                 else:
+                    print('\n\n==pricelist_item_line====',pricelist_item_line.fixed_price)
                     rec.price_unit = pricelist_item_line.fixed_price
                     rec.discount = pricelist_item_line.percent_price
+                print('\n\n==line====',line, line.fixed_price, line.price)
             else:
                 company = rec.company_id.id
                 rec.price_unit = rec.product_id.with_company(company).lst_price
                 rec.discount = 0
-                
+
     @api.depends('product_id', 'product_template_id')
     def _compute_mrp(self):
         for rec in self:
