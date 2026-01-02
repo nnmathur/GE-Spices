@@ -22,8 +22,16 @@ class SaleOrderLine(models.Model):
                     rec.price_unit = line.fixed_price
                     rec.discount = pricelist_item_line.percent_price
                     is_old = False
-            if is_old == True:
-                super()._compute_price_unit()
+                else:
+                    rec.price_unit = pricelist_item_line.fixed_price
+                    rec.discount = pricelist_item_line.percent_price
+            else:
+                company = rec.company_id.id
+                rec.price_unit = rec.product_id.with_company(company).lst_price
+                rec.discount = 0
+                    
+            # if is_old == True:
+            #     super()._compute_price_unit()
 
     @api.depends('product_id', 'product_template_id')
     def _compute_mrp(self):
