@@ -11,6 +11,43 @@ class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
 
     mrp = fields.Float(string='MRP', compute='_compute_mrp', store=True)
+    price_unit = fields.Float(
+        string="Unit Price",
+        compute='_compute_price_unit_custom',
+        digits='Product Price',
+        store=True, readonly=False, required=True)
+    
+    @api.depends('product_id', 'product_uom', 'product_uom_qty')
+    def _compute_price_unit(self):
+        pass
+
+    def _reset_price_unit(self):
+        pass
+
+    @api.depends('product_template_id', 'product_id',  'product_uom', 'product_uom_qty')
+    def _compute_price_unit_custom(self):
+        for rec in self:
+            if not rec.product_template_id:
+                continue
+            print('\n===rec', rec.product_template_id)
+            print('=rec', rec.product_id)
+            product_template_id = rec.product_id.product_tmpl_id
+            print('template_id', product_template_id)
+            is_old = True
+            pricelist_item_line = rec.order_id.pricelist_id.item_ids.filtered(lambda l: l.product_tmpl_id.id == rec.product_template_id.id)
+            company = rec.company_id.id
+            price_unit = rec.product_id.with_company(company).lst_price
+            discount = 0
+            if pricelist_item_line:
+                line = pricelist_item_line.base_pricelist_id.item_ids.filtered(lambda l: l.product_tmpl_id.id == rec.product_template_id.id)
+                if line:
+                    discount = pricelist_item_line.percent_price
+                    price_unit = line.fixed_price
+                else:
+                    price_unit = pricelist_item_line.fixed_priceif
+                    discount = pricelist_item_line.percent_price
+            rec.discount = discount
+            rec.price_unit = price_unit
 
     @api.depends('product_id', 'product_template_id')
     def _compute_mrp(self):
@@ -37,3 +74,14 @@ class Product(models.Model):
 
     # mrp = product.with_company(company).mrp
     new_mrp = fields.Float(string='MRP', company_dependent=True)
+
+class AccountMoveLine(models.Model):
+    _inherit = 'account.move.line'
+
+    mrp = fields.Float(string='MRP', compute='_compute_mrp', store=True)
+
+    @api.depends('product_id')
+    def _compute_mrp(self):
+        for rec in self:
+            company = rec.company_id.id
+            rec.mrp = rec.product_id.with_company(company).new_mrp
