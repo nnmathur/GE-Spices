@@ -22,7 +22,7 @@ class SaleOrderLine(models.Model):
                     rec.price_unit = line.fixed_price
                     rec.discount = pricelist_item_line.percent_price
                     is_old = False
-            if is_old == True
+            if is_old == True:
                 super()._compute_price_unit()
 
     @api.depends('product_id', 'product_template_id')
