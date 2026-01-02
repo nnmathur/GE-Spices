@@ -11,8 +11,14 @@ class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
 
     mrp = fields.Float(string='MRP', compute='_compute_mrp', store=True)
-
-    def _compute_price_unit(self):
+    price_unit = fields.Float(
+        string="Unit Price",
+        compute='_compute_price_unit_custom',
+        digits='Product Price',
+        store=True, readonly=False, required=True, precompute=True)
+    
+    @api.depends('product_id', 'product_uom', 'product_uom_qty')
+    def _compute_price_unit_custom(self):
         for rec in self:
             is_old = True
             pricelist_item_line = rec.order_id.pricelist_id.item_ids.filtered(lambda l: l.product_tmpl_id.id == rec.product_template_id.id)
@@ -29,10 +35,7 @@ class SaleOrderLine(models.Model):
                 company = rec.company_id.id
                 rec.price_unit = rec.product_id.with_company(company).lst_price
                 rec.discount = 0
-                    
-            # if is_old == True:
-            #     super()._compute_price_unit()
-
+                
     @api.depends('product_id', 'product_template_id')
     def _compute_mrp(self):
         for rec in self:
