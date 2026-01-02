@@ -14,11 +14,16 @@ class SaleOrderLine(models.Model):
 
     def _compute_price_unit(self):
         for rec in self:
+            is_old = True
             pricelist_item_line = rec.order_id.pricelist_id.item_ids.filtered(lambda l: l.product_tmpl_id.id == rec.product_template_id.id)
             if pricelist_item_line:
                 line = pricelist_item_line.base_pricelist_id.item_ids.filtered(lambda l: l.product_tmpl_id.id == rec.product_template_id.id)
-                rec.price_unit = line.fixed_price
-        super()._compute_price_unit()
+                if line:
+                    rec.price_unit = line.fixed_price
+                    rec.discount = pricelist_item_line.percent_price
+                    is_old = False
+            if is_old == True
+                super()._compute_price_unit()
 
     @api.depends('product_id', 'product_template_id')
     def _compute_mrp(self):
