@@ -10,10 +10,10 @@
                 <div class="row mb0">
                     <div class="col-4 text-center"/>
                     <div class="col-4 text-center">
-                        <span style="font-size: 24px; color : #0c1252;"><b>Tax Invoice</b></span>
+                        <span style="font-size: 22px; color : #0c1252;"><b>Tax Invoice</b></span>
                     </div>
                     <div class="col-4 text-left">
-                        <span style="font-size: 20px; color : #0c1252;"><i>(ORIGINAL FOR RECIPIENT)</i></span>
+                        <span style="font-size: 18px; color : #0c1252;"><i>(ORIGINAL FOR RECIPIENT)</i></span>
                     </div>
                 </div>
                 <div class="o_boxed_header" style="width: 100%; border: 1px solid black; padding-top: 0px; padding-left: 0px; padding-bottom: 0px">
@@ -23,7 +23,7 @@
                             <div class="col-4">
                                 <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" alt="Logo" style="margin-top:25px; margin-left:0px; width: 120px; hight:120px;"/>
                             </div>
-                            <div class="col-8 mt-1" style="font-size: 13px; color: black;">
+                            <div class="col-8 mt-1" style="font-size: 12px; color: black;">
                                 <div class="mt0 h4" t-field="company.report_header"/>
                                 <div name="company_address" class="float-end mb4">
                                     <strong><span t-if="company.name" t-field="company.name" style="font-size: 13px; color: black;"/></strong>
@@ -92,7 +92,7 @@
                             </div>
                         </div>
                     
-                        <div class="col-6 text-left mt-0" style="margin-left: 0px; border-bottom: 1px solid black;">
+                        <div class="col-6 text-left mt-0" style="font-size: 14px; margin-left: 0px; border-bottom: 1px solid black;">
                             <!--<span style="font-size: 16px; color : black;"><b>Ack No:- </b> <span t-field="o.ack_no"/></span><br/>-->
                             <!--<span style="font-size: 16px; color : black;"><b>Ack Date:- </b> <span t-field="o.ack_date" t-options="{'widget': 'date','format': 'dd-MM-yyyy'}"/></span><br/>-->
                             <!--<span style="font-size: 16px; color : black;"><b>Invoice No. :- <span t-out="doc.name"/></b></span><br/>-->
@@ -143,7 +143,7 @@
                                     <t t-esc="doc.stock_picking_id.scheduled_date" t-options="{'widget': 'date','format': 'dd-MM-yyyy'}"/>
                                 </div>
                             </div>
-                            <div class="row pt-2" style="margin-left:4px; border-bottom: 1px solid black;"> 
+                            <div class="row pt-2" style="margin-left:4px;"> 
                                 <div class="col-4">
                                     Payment Terms
                                 </div>
@@ -154,27 +154,16 @@
                                     <t t-esc="doc.invoice_payment_term_id.name"/>
                                 </div>
                             </div>
-                            <div class="row pt-2" style="margin-left:4px;"> 
-                                <div class="col-4">
-                                    Reference No.
-                                </div>
-                                <div class="col-1">
-                                    :
-                                </div>
-                                <div class="col-7">
-                                    <t t-esc="doc.ref"/>
-                                </div>
-                            </div>
                             
                         </div>
                     </div>
                     
                     <div class="row mb0">
-                        <div class="col-6 text-left" style="margin-left: 0px; border-right: 1px solid black;">
+                        <div class="col-6 text-left" style="font-size: 14px; margin-left: 0px; border-right: 1px solid black;">
                             <span style="margin-left:4px;"><b>Consignee (Ship to)</b></span>
                             <div class="row pt-0" style="margin-left:4px;"> 
                               <div class="col-12">                                      
-                                <strong><t t-esc="doc.partner_shipping_id.name" style="font-size: 22px;"/></strong>
+                                <strong><t t-esc="doc.partner_shipping_id.name" style="font-size: 18px;"/></strong>
                               </div>
                             </div>
                             <div class="row pt-0" style="margin-left:4px;"> 
@@ -250,7 +239,7 @@
                             <span style="margin-left:4px;"><b>Buyer (Bill to)</b></span>
                             <div class="row pt-0" style="margin-left:4px;"> 
                                   <div class="col-12">                                      
-                                    <strong><t t-esc="doc.partner_id.name" style="font-size: 22px;"/></strong>
+                                    <strong><t t-esc="doc.partner_id.name" style="font-size: 18px;"/></strong>
                                   </div>
                               </div>
                               <div class="row pt-0" style="margin-left:4px;"> 
@@ -334,7 +323,19 @@
                                   </div>
                                 </div>
                             </div>
-                        <div class="col-6 text-left" style="margin-left: 0px;">
+                        <div class="col-6 text-left" style="font-size: 14px; margin-left: 0px;">
+                            
+                            <div class="row pt-2" style="margin-left:4px;  border-bottom: 1px solid black;"> 
+                                <div class="col-4">
+                                    Reference No.
+                                </div>
+                                <div class="col-1">
+                                    :
+                                </div>
+                                <div class="col-7">
+                                    <t t-esc="doc.ref"/>
+                                </div>
+                            </div>
                             
                             <div class="row pt-2" style="margin-left:4px; border-bottom: 1px solid black;"> 
                                 <div class="col-4">
@@ -399,11 +400,11 @@
             </div>
  -->
             <div t-attf-class="footer o_boxed_footer o_company_#{company.id}_layout">
-                <div class="text-center text-muted" style="border: 1px solid black;">
+                <div class="text-center text-muted" style="font-size: 13px; border: 1px solid black;">
                     <div t-if="report_type == 'pdf'">
                         <table class="table table-sm table-borderless" style="width:100%; table-layout: fixed;">
                             <tr>
-                                <th name="th_sr" style="width:100%;text-align: left; margin-left:4px; color: black;"></th>
+                                <th name="th_sr" style="width:100%;text-align: left; margin-left:4px; color: black;"/>
                             </tr>
                             <tr style="font-size: 15px; color:black;">
                                 <td style="text-align: left;" name="th_sr">
@@ -454,7 +455,7 @@
                         </table>
                     </div>
                 </div>
-                <div class="text-center text-muted" style="border: 0px solid black;">
+                <div class="text-center text-muted" style="font-size: 11px;border: 0px solid black;">
                     <p>
                         This is a Computer Generated Invoice
                         <br/>
