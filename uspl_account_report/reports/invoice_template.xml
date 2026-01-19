@@ -11,7 +11,7 @@
                         <t t-set="uom_name" t-value=" "/>
                         <table class="table table-sm o_main_table mt-0 mb-0" style="width:100%; table-layout: fixed;">
                             <tr style="background-color: #DDD9C4; color:black; font-size: 13px;">
-                                <th style="width:3%; text-align: left;">Sr. No.</th>
+                                <th style="width:3%; text-align: left;">Sr No</th>
                                 <th style="width:12%; text-align: left;">No. &amp; Kind of Package</th>
                                 <th style="width:22%; text-align: left;">Description of Goods</th>
                                 <th style="width:10%; text-align: left;">HSN/SAC</th>
@@ -187,52 +187,59 @@
                             <t t-set="cgst" t-value="0"/>
                             <t t-set="igst" t-value="0"/>
                             <t t-set="total_tax" t-value="0"/>
-                            <t t-foreach="doc.invoice_line_ids" t-as="line">
+                            <t t-set="hsn_summry" t-value="doc._get_hsn_summry()"/>
+                            <!-- <t t-foreach="doc.invoice_line_ids" t-as="line"> -->
+                            <t t-foreach="hsn_summry" t-as="tax">
                                 <t t-set="price_subtotal" t-value="price_subtotal + line.price_subtotal"/>
                                 <tr style="font-size: 12px; color:black;">
                                     <t>
                                       <td style="text-align: left;" name="th_hsn">
-                                          <span t-field="line.product_id.l10n_in_hsn_code"/>
+                                          <t t-esc="tax['hsn']"/>
                                       </td>
                                       <td name="td_subtotal" class="text-end o_price_total">
-                                        <span class="text-nowrap" t-field="line.price_subtotal" t-options="{'widget': 'float', 'precision': 2}">27.00</span>
+                                        <span class="text-nowrap" t-esc="tax['price_subtotal']" t-options="{'widget': 'float', 'precision': 2}"/>
+                                        <!-- <span class="text-nowrap" t-field="line.price_subtotal" t-options="{'widget': 'float', 'precision': 2}">27.00</span> -->
                                       </td>
-
-                                      <t t-set="igsst_tax_rate" t-value="0"/>
-                                      <t t-if="line.tax_ids and doc.is_igst" t-set="igsst_tax_rate" t-value="line.tax_ids[0].amount"/>
 
                                       <td t-if="doc.is_igst" style="text-align: right;" name="th_igst_rate">
-                                          <span t-esc="igsst_tax_rate"/> % IGST
+                                          <span t-esc="tax['rate']"/>
+                                          <!-- <span t-esc="igsst_tax_rate"/> % IGST -->
                                       </td>
-                                      <t t-set="igst_tax_amt" t-value="line.price_total - line.price_subtotal"/>
+                                      <!-- <t t-set="igst_tax_amt" t-value="line.price_total - line.price_subtotal"/> -->
                                       <td t-if="doc.is_igst" style="text-align: right;" name="th_igst_amt">
-                                          <span t-esc="igst_tax_amt" t-options="{'widget': 'float', 'precision': 2}"/>
-                                          <t t-set="igst" t-value="igst + igst_tax_amt"/>
+                                          <span t-esc="tax['igst']" t-options="{'widget': 'float', 'precision': 2}"/>
+                                          <!-- <span t-esc="igst_tax_amt" t-options="{'widget': 'float', 'precision': 2}"/> -->
+                                          <t t-set="igst" t-value="igst + tax['igst']"/>
                                       </td>
 
-                                      <t t-set="gst_tax_rate" t-value="0"/>
-                                      <t t-if="line.tax_ids and not doc.is_igst" t-set="gst_tax_rate" t-value="line.tax_ids[0].children_tax_ids[0].amount"/>
-
-                                      <td t-if="not doc.is_igst" style="text-align: right;" name="th_igst_rate">
-                                          <span t-esc="gst_tax_rate"/> % CGST
-                                      </td>
-                                      <t t-set="gst_tax_amt" t-value="(line.price_total - line.price_subtotal)/2"/>
-                                      <td t-if="not doc.is_igst" style="text-align: right;" name="th_igst_amt">
-                                          <span t-esc="gst_tax_amt" t-options="{'widget': 'float', 'precision': 2}"/>
-                                          <t t-set="cgst" t-value="cgst + gst_tax_amt"/>
-                                      </td>
+                                      <!-- <t t-set="gst_tax_rate" t-value="0"/>
+                                      <t t-if="line.tax_ids and not doc.is_igst" t-set="gst_tax_rate" t-value="line.tax_ids[0].children_tax_ids[0].amount"/> -->
 
                                       <td t-if="not doc.is_igst" style="text-align: right;" name="th_igst_rate">
-                                          <span t-esc="gst_tax_rate"/> % SGST
+                                          <span t-esc="tax['rate_gst']"/> % CGST
+                                          <!-- <span t-esc="gst_tax_rate"/> % CGST -->
                                       </td>
+                                      <!-- <t t-set="gst_tax_amt" t-value="(line.price_total - line.price_subtotal)/2"/> -->
                                       <td t-if="not doc.is_igst" style="text-align: right;" name="th_igst_amt">
-                                          <span t-esc="gst_tax_amt" t-options="{'widget': 'float', 'precision': 2}"/>
+                                          <t t-esc="tax['gst']" t-options="{'widget': 'float', 'precision': 2}"/>
+                                          <!-- <span t-esc="gst_tax_amt" t-options="{'widget': 'float', 'precision': 2}"/> -->
+                                          <t t-set="cgst" t-value="cgst + tax['gst']"/>
                                       </td>
 
-                                      <t t-set="tax_amt" t-value="line.price_total - line.price_subtotal"/>
+                                      <td t-if="not doc.is_igst" style="text-align: right;" name="th_igst_rate">
+                                          <t t-esc="tax['rate_gst']"/> % SGST
+                                          <!-- <span t-esc="gst_tax_rate"/> -->
+                                      </td>
+                                      <td t-if="not doc.is_igst" style="text-align: right;" name="th_igst_amt">
+                                          <t t-esc="tax['gst']" t-options="{'widget': 'float', 'precision': 2}"/>
+                                          <!-- <span t-esc="gst_tax_amt" t-options="{'widget': 'float', 'precision': 2}"/> -->
+                                      </td>
+
+                                      <!-- <t t-set="tax_amt" t-value="line.price_total - line.price_subtotal"/> -->
                                       <td name="td_tax_amt" class="text-end o_price_total">
-                                        <span class="text-nowrap" t-esc="tax_amt" t-options="{'widget': 'float', 'precision': 2}"/>
-                                        <t t-set="total_tax" t-value="total_tax + tax_amt"/>
+                                        <t t-esc="tax['price_total']" class="text-nowrap" t-options="{'widget': 'float', 'precision': 2}"/>
+                                        <!-- <span class="text-nowrap" t-esc="tax_amt" t-options="{'widget': 'float', 'precision': 2}"/> -->
+                                        <t t-set="total_tax" t-value="total_tax + tax['price_total']"/>
                                       </td>
 
                                       <!-- <td style="text-align: right;" name="th_total">
