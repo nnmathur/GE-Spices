@@ -213,6 +213,7 @@ class AccountMove(models.Model):
         for line in total_tax_ids:
             hsn = line.product_id.l10n_in_hsn_code
             if hsn not in hsn_list:
+                hsn_list.append(hsn)
                 total_tax_lines = self.invoice_line_ids.filtered(lambda l: l.product_id.l10n_in_hsn_code == hsn)                
                 price_subtotal = sum(total_tax_lines.mapped('price_subtotal'))
                 price_total = sum(total_tax_lines.mapped('price_total'))

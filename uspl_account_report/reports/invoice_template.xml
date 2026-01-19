@@ -190,13 +190,13 @@
                             <t t-set="hsn_summry" t-value="doc._get_hsn_summry()"/>
                             <!-- <t t-foreach="doc.invoice_line_ids" t-as="line"> -->
                             <t t-foreach="hsn_summry" t-as="tax">
-                                <t t-set="price_subtotal" t-value="price_subtotal + line.price_subtotal"/>
                                 <tr style="font-size: 12px; color:black;">
                                     <t>
                                       <td style="text-align: left;" name="th_hsn">
                                           <t t-esc="tax['hsn']"/>
                                       </td>
                                       <td name="td_subtotal" class="text-end o_price_total">
+                                        <t t-set="price_subtotal" t-value="price_subtotal + tax['price_subtotal']"/>
                                         <span class="text-nowrap" t-esc="tax['price_subtotal']" t-options="{'widget': 'float', 'precision': 2}"/>
                                         <!-- <span class="text-nowrap" t-field="line.price_subtotal" t-options="{'widget': 'float', 'precision': 2}">27.00</span> -->
                                       </td>
