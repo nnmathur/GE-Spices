@@ -206,6 +206,28 @@ class AccountMove(models.Model):
                 tax_lst.append(dictn)
         return tax_lst
 
+    def _get_hsn_summry(self):        
+        hsn_list = []
+        summry_lst = []
+        total_tax_ids = self.invoice_line_ids
+        for line in total_tax_ids:
+            hsn = line.product_id.l10n_in_hsn_code
+            if hsn not in hsn_list:
+                total_tax_lines = self.invoice_line_ids.filtered(lambda l: l.product_id.l10n_in_hsn_code == hsn)                
+                price_subtotal = sum(total_tax_lines.mapped('price_subtotal'))
+                price_total = sum(total_tax_lines.mapped('price_total'))
+                tax_amt = sum(total_tax_lines.mapped('price_total')) - sum(total_tax_lines.mapped('price_subtotal'))
+
+                rate = False
+                rate_gst = 0
+                if line.tax_ids:
+                    rate = line.tax_ids[0].name
+                    rate_gst = line.tax_ids[0].amount/2
+                
+                dictn = {'hsn':hsn, 'price_subtotal':price_subtotal, 'rate':rate, 'rate_gst':rate_gst, 'price_total':price_total, 'igst':tax_amt, 'gst':tax_amt/2}
+                summry_lst.append(dictn)
+        return summry_lst
+
 class AccountLine(models.Model):
     _inherit = 'account.move.line'
     
