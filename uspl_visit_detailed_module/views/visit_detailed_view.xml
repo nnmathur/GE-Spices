@@ -198,5 +198,5 @@
     </record>
 
     <menuitem id="menu_visit_detailed_root" name="Visit Detailed"/>
-    <menuitem id="menu_visit_detailed" name="Visit Detailed" parent="menu_visit_detailed_root" action="action_visit_detailed"/>
+    <!-- <menuitem id="menu_visit_detailed" name="Visit Detailed" parent="menu_visit_detailed_root" action="action_visit_detailed"/> -->
 </odoo>

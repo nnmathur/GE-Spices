@@ -93,6 +93,6 @@
     </record>
 
     <menuitem id="menu_visitor_sales_root" name="Outlet Sales"/>
-    <menuitem id="menu_visitor_sales" name="Outlet Sales" parent="menu_visitor_sales_root" action="action_visitor_sales"/>
+    <!-- <menuitem id="menu_visitor_sales" name="Outlet Sales" parent="menu_visitor_sales_root" action="action_visitor_sales"/> -->
 
 </odoo>
